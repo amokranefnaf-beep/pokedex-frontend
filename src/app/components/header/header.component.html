@@ -1,0 +1,73 @@
+<header class="header">
+
+  <div class="header__container">
+
+    <!-- Logo -->
+
+    <a routerLink="/" class="header__logo">
+
+      <div class="header__pokeball">
+
+        <svg viewBox="0 0 100 100" fill="currentColor">
+
+          <circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" stroke-width="8"/>
+
+          <line x1="5" y1="50" x2="95" y2="50" stroke="currentColor" stroke-width="8"/>
+
+          <circle cx="50" cy="50" r="15" fill="currentColor"/>
+
+          <circle cx="50" cy="50" r="8" fill="#E3350D"/>
+
+        </svg>
+
+      </div>
+
+      <span class="header__title">PokéDex</span>
+
+    </a>
+
+
+
+    <!-- Navigation -->
+
+    <nav class="header__nav">
+
+      <a routerLink="/collection" routerLinkActive="active" class="nav-link">
+
+        📚 Collection
+
+      </a>
+
+      <a routerLink="/search" routerLinkActive="active" class="nav-link">
+
+        🔍 Recherche
+
+      </a>
+
+      <a routerLink="/favorites" routerLinkActive="active" class="nav-link">
+
+        ❤️ Favoris
+
+      </a>
+
+    </nav>
+
+
+
+    <!-- Stats rapides -->
+
+    <div class="header__stats">
+
+      <div class="stat-badge">
+
+        <span class="stat-badge__value">{{ totalCards }}</span>
+
+        <span class="stat-badge__label">Cartes</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</header>

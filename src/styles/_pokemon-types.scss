@@ -1,0 +1,97 @@
+// ===========================================
+
+// TYPES POKÉMON
+
+// ===========================================
+
+
+
+// Map des couleurs par type
+
+$type-colors: (
+
+  'normal': (#A8A878, #757575),
+
+  'fire': (#F08030, #DD2C00),
+
+  'water': (#6890F0, #1565C0),
+
+  'electric': (#F8D030, #F9A825),
+
+  'grass': (#78C850, #2E7D32),
+
+  'ice': (#98D8D8, #4DD0E1),
+
+  'fighting': (#C03028, #B71C1C),
+
+  'poison': (#A040A0, #7B1FA2),
+
+  'ground': (#E0C068, #8D6E63),
+
+  'flying': (#A890F0, #7C4DFF),
+
+  'psychic': (#F85888, #AD1457),
+
+  'bug': (#A8B820, #689F38),
+
+  'rock': (#B8A038, #795548),
+
+  'ghost': (#705898, #4A148C),
+
+  'dragon': (#7038F8, #4527A0),
+
+  'dark': (#705848, #3E2723),
+
+  'steel': (#B8B8D0, #78909C),
+
+  'fairy': (#EE99AC, #EC407A)
+
+);
+
+
+
+// Génère les classes .type-xxx
+
+@each $type, $colors in $type-colors {
+
+  .type-#{$type} {
+
+    background: linear-gradient(135deg, nth($colors, 1), nth($colors, 2));
+
+    color: white;
+
+
+
+    // Texte sombre pour les types clairs
+
+    @if $type == 'electric' or $type == 'ice' or $type == 'ground' {
+
+      color: #333;
+
+    }
+
+  }
+
+}
+
+
+
+// Badge de type
+
+.type-badge {
+
+  display: inline-block;
+
+  padding: 0.2rem 0.75rem;
+
+  border-radius: 12px;
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+
+  text-transform: capitalize;
+
+  letter-spacing: 0.5px;
+
+}

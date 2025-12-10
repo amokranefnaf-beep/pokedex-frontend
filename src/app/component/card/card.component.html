@@ -1,0 +1,115 @@
+<div class="pokemon-card" [class.is-legendary]="card['rarity'] === 'LEGENDARY'">
+
+  <!-- Bouton favori -->
+
+  <button class="card__favorite" (click)="onFavoriteClick()">
+
+    {{ this.card["isFavorite"] ? '❤️' : '🤍' }}
+
+  </button>
+
+
+
+  <!-- Numéro du Pokémon -->
+
+  <span class="card__number">#{{ this.card["pokeApiId"] | number:'3.0-0' }}</span>
+
+
+
+  <!-- Image -->
+
+  <div class="card__image-wrapper">
+
+    <img
+
+      ngSrc="this.card[" imageUrl fill/>"]"
+
+      [alt]="card.name"
+
+      class="card__image"
+
+      loading="lazy">
+
+  </div>
+
+
+
+  <!-- Infos -->
+
+  <div class="card__info">
+
+    <h3 class="card__name">{{ this.card["name"] }}</h3>
+
+
+
+    <!-- Types -->
+
+    <div class="card__types">
+
+      <span
+
+        *ngFor="let type of card['types']"
+
+        class="type-badge"
+
+        [ngClass]="'type-' + type.toLowerCase()">
+
+        {{ type }}
+
+      </span>
+
+    </div>
+
+
+
+    <!-- Stats -->
+
+    <div class="card__stats">
+
+      <div class="stat">
+
+        <span class="stat__icon">❤️</span>
+
+        <span class="stat__value">{{ this.card["hp"] }}</span>
+
+      </div>
+
+      <div class="stat">
+
+        <span class="stat__icon">⚔️</span>
+
+        <span class="stat__value">{{ this.card["attack"] }}</span>
+
+      </div>
+
+      <div class="stat">
+
+        <span class="stat__icon">🛡️</span>
+
+        <span class="stat__value">{{ this.card["defense"] }}</span>
+
+      </div>
+
+      <div class="stat">
+
+        <span class="stat__icon">💨</span>
+
+        <span class="stat__value">{{ this.card["speed"] }}</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Bouton supprimer -->
+
+  <button class="card__delete" (click)="onDeleteClick()">
+
+    🗑️
+
+  </button>
+
+</div>

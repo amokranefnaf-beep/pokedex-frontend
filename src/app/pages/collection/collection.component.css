@@ -1,0 +1,97 @@
+.collection {
+
+  padding: 2rem;
+
+
+
+  h2 {
+
+    margin-bottom: 1.5rem;
+
+    color: #333;
+
+  }
+
+}
+
+
+
+.cards-grid {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+
+  gap: 1.5rem;
+
+  justify-items: center;
+
+}
+
+
+
+.loading, .error, .empty {
+
+  text-align: center;
+
+  padding: 3rem;
+
+  font-size: 1.2rem;
+
+}
+
+
+
+.error { color: #e74c3c; }
+
+
+
+.pagination {
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 1rem;
+
+  margin-top: 2rem;
+
+
+
+  button {
+
+    padding: 0.5rem 1rem;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #667eea;
+
+    color: white;
+
+    cursor: pointer;
+
+
+
+    &:disabled {
+
+      background: #ccc;
+
+      cursor: not-allowed;
+
+    }
+
+
+
+    &:hover:not(:disabled) {
+
+      background: #5a6fd6;
+
+    }
+
+  }
+
+}

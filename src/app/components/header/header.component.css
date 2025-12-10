@@ -1,0 +1,208 @@
+/* Header principal */
+
+.header {
+
+  position: sticky;
+
+  top: 0;
+
+  z-index: 50;
+
+  background: rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+}
+
+
+
+.header-container {
+
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 1rem 1.5rem;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+}
+
+
+
+/* Logo */
+
+.header-logo {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+
+  color: white;
+
+  text-decoration: none;
+
+}
+
+
+
+.pokeball-icon {
+
+  width: 40px;
+
+  height: 40px;
+
+  color: white;
+
+  transition: transform 0.3s ease;
+
+}
+
+
+
+.pokeball-icon:hover {
+
+  transform: rotate(20deg);
+
+}
+
+
+/*noinspection CssUnresolvedCustomProperty*/
+.header-title {
+
+  font-family: var(--font-display);
+
+  font-size: 1.5rem;
+
+}
+
+
+
+/* Navigation */
+
+.header-nav {
+
+  display: flex;
+
+  gap: 2rem;
+
+}
+
+
+
+.nav-link {
+
+  position: relative;
+
+  color: #9ca3af;
+
+  font-weight: 500;
+
+  text-decoration: none;
+
+  transition: color 0.2s ease;
+
+}
+
+
+
+/* Ligne rouge sous le lien */
+
+.nav-link::after {
+
+  content: '';
+
+  position: absolute;
+
+  bottom: -5px;
+
+  left: 50%;
+
+  width: 0;
+
+  height: 3px;
+
+  background: red;
+
+  border-radius: 2px;
+
+  transition: all 0.3s ease;
+
+  transform: translateX(-50%);
+
+}
+
+
+
+.nav-link:hover,
+
+.nav-link.active {
+
+  color: white;
+
+}
+
+
+
+.nav-link:hover::after,
+
+.nav-link.active::after {
+
+  width: 100%;
+
+}
+
+
+
+/* Badge statistiques */
+
+.stat-badge {
+
+  background: rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(10px);
+
+  padding: 0.5rem 1rem;
+
+  border-radius: 9999px;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 0.5rem;
+}
+
+
+
+.stat-value {
+
+  font-family: monospace;
+
+  font-weight: 700;
+
+  color: yellow;
+
+}
+
+
+
+.stat-label {
+
+  font-size: 0.875rem;
+
+  color: #9ca3af;
+
+}

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(rm:*)",
+      "Bash(npm install)",
+      "Bash(cmd.exe /c \"cd /d C:\\Users\\c.yacer\\developpement\\pokedex && npm run build\")"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

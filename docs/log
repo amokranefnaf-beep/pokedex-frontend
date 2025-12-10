@@ -1,0 +1,215 @@
+Application bundle generation failed. [14.823 seconds] - 2025-12-08T14:04:37.627Z
+
+▲ [WARNING] Cannot use type selector "__logo" directly after nesting selector "&" [plugin angular-compiler] [css-syntax-error]
+
+    src/app/components/header/header.component.css:19:3:
+      19 │   &__logo {
+         │    ~~~~~~
+         ╵    :is(__logo)
+
+  CSS nesting syntax does not allow the "&" selector to come before a type selector. You can wrap this selector in ":is(...)" as a workaround. This restriction exists to avoid problems with SASS nesting, where the same syntax means something very different that has no equivalent in real CSS (appending a suffix to the parent selector).
+
+
+▲ [WARNING] Cannot use type selector "__icon" directly after nesting selector "&" [plugin angular-compiler] [css-syntax-error]
+
+    src/app/components/header/header.component.css:41:3:
+      41 │   &__icon {
+         │    ~~~~~~
+         ╵    :is(__icon)
+
+  CSS nesting syntax does not allow the "&" selector to come before a type selector. You can wrap this selector in ":is(...)" as a workaround. This restriction exists to avoid problems with SASS nesting, where the same syntax means something very different that has no equivalent in real CSS (appending a suffix to the parent selector).
+
+
+▲ [WARNING] Cannot use type selector "__nav" directly after nesting selector "&" [plugin angular-compiler] [css-syntax-error]
+
+    src/app/components/header/header.component.css:49:3:
+      49 │   &__nav {
+         │    ~~~~~
+         ╵    :is(__nav)
+
+  CSS nesting syntax does not allow the "&" selector to come before a type selector. You can wrap this selector in ":is(...)" as a workaround. This restriction exists to avoid problems with SASS nesting, where the same syntax means something very different that has no equivalent in real CSS (appending a suffix to the parent selector).
+
+
+X [ERROR] NG2008: Could not find template file './app.component.html'. [plugin angular-compiler]
+
+    src/app/app.component.ts:18:17:
+      18 │   'templateUrl': './app.component.html',
+         ╵                  ~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS4111: Property 'imageUrl' comes from an index signature, so it must be accessed with ['imageUrl']. [plugin angular-compiler]
+
+    src/app/component/card/card.component.html:17:21:
+      17 │     <img [src]="card.imageUrl" [alt]="card['name']">
+         ╵                      ~~~~~~~~
+
+  Error occurs in the template of component CardComponent.
+
+    src/app/component/card/card.component.ts:18:15:
+      18 │   templateUrl: './card.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS4111: Property 'name' comes from an index signature, so it must be accessed with ['name']. [plugin angular-compiler]
+
+    src/app/component/card/card.component.html:29:35:
+      29 │     <h3 class="card__name">{{ card.name }}</h3>
+         ╵                                    ~~~~
+
+  Error occurs in the template of component CardComponent.
+
+    src/app/component/card/card.component.ts:18:15:
+      18 │   templateUrl: './card.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS4111: Property 'hp' comes from an index signature, so it must be accessed with ['hp']. [plugin angular-compiler]
+
+    src/app/component/card/card.component.html:57:48:
+      57 │       <div class="stat"><span>❤️</span> {{ card.hp }}</div>
+         ╵                                             ~~
+
+  Error occurs in the template of component CardComponent.
+
+    src/app/component/card/card.component.ts:18:15:
+      18 │   templateUrl: './card.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS4111: Property 'attack' comes from an index signature, so it must be accessed with ['attack']. [plugin angular-compiler]
+
+    src/app/component/card/card.component.html:59:48:
+      59 │       <div class="stat"><span>⚔️</span> {{ card.attack }}</div>
+         ╵                                             ~~~~~~
+
+  Error occurs in the template of component CardComponent.
+
+    src/app/component/card/card.component.ts:18:15:
+      18 │   templateUrl: './card.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS4111: Property 'defense' comes from an index signature, so it must be accessed with ['defense']. [plugin angular-compiler]
+
+    src/app/component/card/card.component.html:61:49:
+      61 │       <div class="stat"><span>🛡️</span> {{ card.defense }}</div>
+         ╵                                             ~~~~~~~
+
+  Error occurs in the template of component CardComponent.
+
+    src/app/component/card/card.component.ts:18:15:
+      18 │   templateUrl: './card.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS4111: Property 'speed' comes from an index signature, so it must be accessed with ['speed']. [plugin angular-compiler]
+
+    src/app/component/card/card.component.html:63:48:
+      63 │       <div class="stat"><span>💨</span> {{ card.speed }}</div>
+         ╵                                              ~~~~~
+
+  Error occurs in the template of component CardComponent.
+
+    src/app/component/card/card.component.ts:18:15:
+      18 │   templateUrl: './card.component.html',
+         ╵                ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG2008: Could not find stylesheet file './card.component.scss'. [plugin angular-compiler]
+
+    src/app/component/card/card.component.ts:20:12:
+      20 │   styleUrl: './card.component.scss'
+         ╵             ~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] NG2008: Could not find stylesheet file './header.component.scss'. [plugin angular-compiler]
+
+    src/app/components/header/header.components.ts:17:12:
+      17 │   styleUrl: './header.component.scss'
+         ╵             ~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] TS2564: Property 'id' has no initializer and is not definitely assigned in the constructor. [plugin angular-compiler]
+
+    src/app/models/index.ts:13:2:
+      13 │   id: number;
+         ╵   ~~
+
+
+X [ERROR] NG2003: No suitable injection token for parameter 'cardService' of class 'CollectionComponent'.
+  Consider using the @Inject decorator to specify an injection token. [plugin angular-compiler]
+
+    src/app/pages/collection/collection.component.ts:50:22:
+      50 │   constructor(private cardService: CardService) { }
+         ╵                       ~~~~~~~~~~~
+
+  This type does not have a value, so it cannot be used as injection token.
+
+    src/app/pages/collection/collection.component.ts:50:35:
+      50 │   constructor(private cardService: CardService) { }
+         ╵                                    ~~~~~~~~~~~
+
+
+X [ERROR] TS7006: Parameter 'err' implicitly has an 'any' type. [plugin angular-compiler]
+
+    src/app/pages/collection/collection.component.ts:84:14:
+      84 │       error: (err) => {
+         ╵               ~~~
+
+
+X [ERROR] TS7006: Parameter 'updatedCard' implicitly has an 'any' type. [plugin angular-compiler]
+
+    src/app/pages/collection/collection.component.ts:104:13:
+      104 │       next: (updatedCard) => {
+          ╵              ~~~~~~~~~~~
+
+
+X [ERROR] TS7006: Parameter 'err' implicitly has an 'any' type. [plugin angular-compiler]
+
+    src/app/pages/collection/collection.component.ts:118:14:
+      118 │       error: (err) => console.error('Erreur toggle favori', err)
+          ╵               ~~~
+
+
+X [ERROR] TS7006: Parameter 'err' implicitly has an 'any' type. [plugin angular-compiler]
+
+    src/app/pages/collection/collection.component.ts:140:16:
+      140 │         error: (err) => console.error('Erreur suppression', err)
+          ╵                 ~~~
+
+
+X [ERROR] Could not resolve "./pages/search/search.component"
+
+    src/app/app.routes.ts:16:37:
+      16 │ ...  loadComponent: () => import((`./pages/search/search.component`))
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "../../components/card/card.component"
+
+    src/app/pages/collection/collection.component.ts:6:30:
+      6 │ import { CardComponent } from '../../components/card/card.component';
+        ╵                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Unexpected end of file in JSON [plugin angular-compiler]
+
+    src/app/tsconfig.json:1:0:
+      1 │
+        ╵ ^
+
+
+X [ERROR] Could not resolve "./pages/search/search.component"
+
+    src/app/app.routes.ts:16:37:
+      16 │ ...  loadComponent: () => import((`./pages/search/search.component`))
+         ╵                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+X [ERROR] Could not resolve "../../components/card/card.component"
+
+    src/app/pages/collection/collection.component.ts:6:30:
+      6 │ import { CardComponent } from '../../components/card/card.component';
+        ╵                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+

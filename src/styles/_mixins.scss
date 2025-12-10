@@ -1,0 +1,147 @@
+// ===========================================
+
+// MIXINS RÉUTILISABLES
+
+// ===========================================
+
+@use 'variables' as *;
+
+
+
+// Glass morphism
+
+@mixin glass($opacity: 0.05) {
+
+  background: rgba(255, 255, 255, $opacity);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+// Bouton primaire
+
+@mixin btn-primary {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: $spacing-sm;
+
+  padding: $spacing-md $spacing-lg;
+
+  background: $poke-red;
+
+  color: $text-white;
+
+  font-family: $font-body;
+
+  font-weight: 600;
+
+  border: none;
+
+  border-radius: $border-radius-lg;
+
+  cursor: pointer;
+
+  transition: all $transition-normal;
+
+
+
+  &:hover {
+
+    background: darken($poke-red, 10%);
+
+    transform: translateY(-2px);
+
+    box-shadow: $shadow-glow-red;
+
+  }
+
+
+
+  &:active {
+
+    transform: translateY(0);
+
+  }
+
+}
+
+
+
+// Bouton secondaire (glass)
+
+@mixin btn-secondary {
+
+  @include glass(0.1);
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: $spacing-sm;
+
+  padding: $spacing-md $spacing-lg;
+
+  color: $text-white;
+
+  font-family: $font-body;
+
+  font-weight: 600;
+
+  border-radius: $border-radius-lg;
+
+  cursor: pointer;
+
+  transition: all $transition-normal;
+
+
+
+  &:hover {
+
+    background: rgba(255, 255, 255, 0.2);
+
+    transform: translateY(-2px);
+
+  }
+
+}
+
+
+
+// Flexbox center
+
+@mixin flex-center {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+}
+
+
+
+// Responsive
+
+@mixin respond-to($breakpoint) {
+
+  @media (min-width: $breakpoint) {
+
+    @content;
+
+  }
+
+}

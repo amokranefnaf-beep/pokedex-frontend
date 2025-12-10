@@ -1,0 +1,482 @@
+/* ===========================================
+
+   POKEDEX COLLECTION - STYLES GLOBAUX
+
+   =========================================== */
+
+
+
+/* ----- VARIABLES CSS ----- */
+
+:root {
+
+  /* Couleurs principales */
+
+  --poke-red: #E3350D;
+
+  --poke-blue: #1E90FF;
+
+  --poke-yellow: #FFCB05;
+
+  --poke-purple: #7B68EE;
+
+  --poke-green: #4ADE80;
+
+  --poke-orange: #FB923C;
+
+
+
+  /* Fonds sombres */
+
+  --poke-dark: #1a1a2e;
+
+  --poke-darker: #0f0f1a;
+
+
+
+  /* Texte */
+
+  --text-white: #ffffff;
+
+  --text-gray-400: #9ca3af;
+
+  --text-gray-500: #6b7280;
+
+
+
+  /* Polices */
+
+  --font-display: 'Bowlby One', cursive;
+
+  --font-body: 'Quicksand', sans-serif;
+
+  --font-mono: 'Space Mono', monospace;
+
+
+
+  /* Espacements */
+
+  --spacing-xs: 0.25rem;
+
+  --spacing-sm: 0.5rem;
+
+  --spacing-md: 1rem;
+
+  --spacing-lg: 1.5rem;
+
+  --spacing-xl: 2rem;
+
+
+
+  /* Bordures arrondies */
+
+  --radius-sm: 8px;
+
+  --radius-md: 12px;
+
+  --radius-lg: 16px;
+
+  --radius-xl: 20px;
+
+  --radius-full: 9999px;
+
+
+
+  /* Transitions */
+
+  --transition-fast: 0.2s ease;
+
+  --transition-normal: 0.3s ease;
+
+  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+}
+
+
+
+/* ----- RESET CSS ----- */
+
+*, *::before, *::after {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+}
+
+
+
+html {
+
+  scroll-behavior: smooth;
+
+}
+
+
+
+body {
+
+  font-family: var(--font-body);
+
+  background-color: var(--poke-darker);
+
+  color: var(--text-white);
+
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+}
+
+
+
+/* ----- SCROLLBAR PERSONNALISÉE ----- */
+
+::-webkit-scrollbar {
+
+  width: 8px;
+
+}
+
+
+
+::-webkit-scrollbar-track {
+
+  background: var(--poke-dark);
+
+}
+
+
+
+::-webkit-scrollbar-thumb {
+
+  background: var(--poke-red);
+
+  border-radius: 4px;
+
+}
+
+
+
+/* ----- TITRES ----- */
+
+h1, h2, h3 {
+
+  font-family: var(--font-display);
+
+}
+
+
+
+/* ----- LIENS ----- */
+
+a {
+
+  color: var(--poke-blue);
+
+  text-decoration: none;
+
+  transition: color var(--transition-fast);
+
+}
+
+
+
+a:hover {
+
+  color: #5ba3f5;
+
+}
+
+/* ----- BOUTON PRIMAIRE ----- */
+
+.btn-primary {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: var(--spacing-sm);
+
+  padding: var(--spacing-md) var(--spacing-lg);
+
+  background: var(--poke-red);
+
+  color: var(--text-white);
+
+  font-family: var(--font-body);
+
+  font-weight: 600;
+
+  font-size: 1rem;
+
+  border: none;
+
+  border-radius: var(--radius-lg);
+
+  cursor: pointer;
+
+  transition: all var(--transition-normal);
+
+}
+
+
+
+.btn-primary:hover {
+
+  background: #c42d0b;
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 0 20px rgba(227, 53, 13, 0.5);
+
+}
+
+
+
+/* ----- BOUTON SECONDAIRE (GLASS) ----- */
+
+.btn-secondary {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: var(--spacing-sm);
+
+  padding: var(--spacing-md) var(--spacing-lg);
+
+  background: rgba(255, 255, 255, 0.1);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: var(--text-white);
+
+  font-family: var(--font-body);
+
+  font-weight: 600;
+
+  border-radius: var(--radius-lg);
+
+  cursor: pointer;
+
+  transition: all var(--transition-normal);
+
+}
+
+
+
+.btn-secondary:hover {
+
+  background: rgba(255, 255, 255, 0.2);
+
+  transform: translateY(-2px);
+
+}
+
+/* ----- GLASS MORPHISM ----- */
+
+.glass {
+
+  background: rgba(255, 255, 255, 0.05);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+}
+
+
+
+/* ----- CONTAINER ----- */
+
+.container {
+
+  max-width: 1280px;
+
+  margin: 0 auto;
+
+  padding: 0 var(--spacing-lg);
+
+}
+
+/* ----- ANIMATIONS ----- */
+
+
+
+/* Animation flottante */
+
+@keyframes float {
+
+  0%, 100% { transform: translateY(0px); }
+
+  50% { transform: translateY(-20px); }
+
+}
+
+
+
+/* Pulsation lumineuse */
+
+@keyframes pulse-glow {
+
+  0%, 100% { box-shadow: 0 0 20px rgba(227, 53, 13, 0.5); }
+
+  50% { box-shadow: 0 0 40px rgba(227, 53, 13, 0.8); }
+
+}
+
+
+
+/* Effet brillant */
+
+@keyframes shimmer {
+
+  0% { background-position: -200% 0; }
+
+  100% { background-position: 200% 0; }
+
+}
+
+
+
+/* Rebond à l'apparition */
+
+@keyframes bounce-in {
+
+  0% { transform: scale(0); opacity: 0; }
+
+  50% { transform: scale(1.1); }
+
+  100% { transform: scale(1); opacity: 1; }
+
+}
+
+
+
+/* Glissement vers le haut */
+
+@keyframes slide-up {
+
+  from { transform: translateY(50px); opacity: 0; }
+
+  to { transform: translateY(0); opacity: 1; }
+
+}
+
+
+
+/* Dégradé animé */
+
+@keyframes gradient-shift {
+
+  0% { background-position: 0% 50%; }
+
+  50% { background-position: 100% 50%; }
+
+  100% { background-position: 0% 50%; }
+
+}
+
+
+
+/* Classes utilitaires pour animations */
+
+.float { animation: float 6s ease-in-out infinite; }
+
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+.bounce-in { animation: bounce-in 0.6s ease-out forwards; }
+
+.slide-up { animation: slide-up 0.5s ease-out forwards; }
+
+
+
+/* Texte avec dégradé animé */
+
+.gradient-text {
+
+  background: linear-gradient(135deg, #E3350D, #FFCB05, #1E90FF);
+
+  background-size: 200% 200%;
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+
+  background-clip: text;
+
+  animation: gradient-shift 4s ease infinite;
+
+}
+
+/* ----- TYPES POKÉMON ----- */
+
+
+
+.type-badge {
+
+  display: inline-block;
+
+  padding: 0.2rem 0.75rem;
+
+  border-radius: 12px;
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+
+  text-transform: capitalize;
+
+  color: white;
+
+}
+
+.type-normal { background: linear-gradient(135deg, #A8A878, #757575); }
+
+.type-fire { background: linear-gradient(135deg, #F08030, #DD2C00); }
+
+.type-water { background: linear-gradient(135deg, #6890F0, #1565C0); }
+
+.type-electric { background: linear-gradient(135deg, #F8D030, #F9A825); color: #333; }
+
+.type-grass { background: linear-gradient(135deg, #78C850, #2E7D32); }
+
+.type-ice { background: linear-gradient(135deg, #98D8D8, #4DD0E1); color: #333; }
+
+.type-fighting { background: linear-gradient(135deg, #C03028, #B71C1C); }
+
+.type-poison { background: linear-gradient(135deg, #A040A0, #7B1FA2); }
+
+.type-ground { background: linear-gradient(135deg, #E0C068, #8D6E63); color: #333; }
+
+.type-flying { background: linear-gradient(135deg, #A890F0, #7C4DFF); }
+
+.type-psychic { background: linear-gradient(135deg, #F85888, #AD1457); }
+
+.type-bug { background: linear-gradient(135deg, #A8B820, #689F38); }
+
+.type-rock { background: linear-gradient(135deg, #B8A038, #795548); }
+
+.type-ghost { background: linear-gradient(135deg, #705898, #4A148C); }
+
+.type-dragon { background: linear-gradient(135deg, #7038F8, #4527A0); }
+
+.type-dark { background: linear-gradient(135deg, #705848, #3E2723); }
+
+.type-steel { background: linear-gradient(135deg, #B8B8D0, #78909C); }
+
+.type-fairy { background: linear-gradient(135deg, #EE99AC, #EC407A); }
+

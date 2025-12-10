@@ -1,0 +1,115 @@
+// ===========================================
+
+// DESIGN SYSTEM - VARIABLES
+
+// ===========================================
+
+
+
+// ----- COULEURS -----
+
+$poke-red: #E3350D;
+
+$poke-blue: #1E90FF;
+
+$poke-yellow: #FFCB05;
+
+$poke-purple: #7B68EE;
+
+$poke-green: #4ADE80;
+
+$poke-orange: #FB923C;
+
+
+
+// Fond sombre
+
+$poke-dark: #1a1a2e;
+
+$poke-darker: #0f0f1a;
+
+
+
+// Texte
+
+$text-white: #ffffff;
+
+$text-gray-400: #9ca3af;
+
+$text-gray-500: #6b7280;
+
+
+
+// ----- POLICES -----
+
+$font-display: 'Bowlby One', cursive;
+
+$font-body: 'Quicksand', sans-serif;
+
+$font-mono: 'Space Mono', monospace;
+
+
+
+// ----- ESPACEMENTS -----
+
+$spacing-xs: 0.25rem;  // 4px
+
+$spacing-sm: 0.5rem;   // 8px
+
+$spacing-md: 1rem;     // 16px
+
+$spacing-lg: 1.5rem;   // 24px
+
+$spacing-xl: 2rem;     // 32px
+
+$spacing-2xl: 3rem;    // 48px
+
+
+
+// ----- BORDURES -----
+
+$border-radius-sm: 8px;
+
+$border-radius-md: 12px;
+
+$border-radius-lg: 16px;
+
+$border-radius-xl: 20px;
+
+$border-radius-full: 9999px;
+
+
+
+// ----- OMBRES -----
+
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+$shadow-md: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+$shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.4);
+
+$shadow-glow-red: 0 0 20px rgba($poke-red, 0.5);
+
+
+
+// ----- TRANSITIONS -----
+
+$transition-fast: 0.2s ease;
+
+$transition-normal: 0.3s ease;
+
+$transition-slow: 0.5s ease;
+
+$transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+
+
+// ----- BREAKPOINTS -----
+
+$breakpoint-sm: 640px;
+
+$breakpoint-md: 768px;
+
+$breakpoint-lg: 1024px;
+
+$breakpoint-xl: 1280px;
