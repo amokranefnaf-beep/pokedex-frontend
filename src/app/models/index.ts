@@ -1,17 +1,5 @@
 // Exporte tous les modèles depuis un seul fichier
 
-// @ts-ignore
-export * from './card.model';
-
-// @ts-ignore
-export * from './pokemon-api.model';
-
+export type { default as Card } from './cards.models';
 export * from './page.model';
-
-export class Card {
-  [x: string]: any;
-  id!: number;
-}
-
-export class PokemonApi {
-}
+export type { PokemonApi } from './pokemon-api.models';
