@@ -1,21 +1,163 @@
+/* ===========================================
+   IMPORTS - Polices Google Fonts
+   =========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Bowlby+One&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+/* ===========================================
+   IMPORTS - Fichiers SCSS
+   =========================================== */
+@import './styles/_variables.scss';
+@import './styles/_animations.scss';
+@import './styles/_mixins.scss';
+@import './styles/_pokemon-types.scss';
+
+/* ===========================================
+   RESET & BASE
+   =========================================== */
 * {
-
   margin: 0;
-
   padding: 0;
-
   box-sizing: border-box;
-
 }
 
-
+html {
+  scroll-behavior: smooth;
+}
 
 body {
-
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-  background-color: #f5f5f5;
-
+  font-family: var(--font-body);
+  background-color: var(--poke-darker);
+  color: var(--text-white);
   min-height: 100vh;
+  overflow-x: hidden;
+}
 
-} /* You can add global styles to this file, and also import other style files */
+/* ===========================================
+   SCROLLBAR PERSONNALISÉE
+   =========================================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--poke-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--poke-red);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c72d0a;
+}
+
+/* ===========================================
+   NOISE OVERLAY (texture)
+   =========================================== */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1000;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* ===========================================
+   POKEBALL BACKGROUND DECORATION
+   =========================================== */
+.pokeball-bg {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 30px solid rgba(227, 53, 13, 0.1);
+  right: -200px;
+  top: -200px;
+  z-index: 0;
+}
+
+.pokeball-bg::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 15px;
+  background: rgba(227, 53, 13, 0.1);
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.pokeball-bg::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 15px solid rgba(227, 53, 13, 0.1);
+  background: transparent;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ===========================================
+   UTILITY CLASSES
+   =========================================== */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, var(--poke-red), var(--poke-yellow), var(--poke-blue));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 4s ease infinite;
+}
+
+.btn-press:active {
+  transform: scale(0.95);
+}
+
+.section-title {
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--poke-red);
+  border-radius: 50%;
+}
+
+/* ===========================================
+   SECTIONS
+   =========================================== */
+section {
+  min-height: 100vh;
+  padding: 100px 0;
+  position: relative;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 768px) {
+  .pokeball-bg {
+    display: none;
+  }
+
+  section {
+    padding: 60px 0;
+  }
+}

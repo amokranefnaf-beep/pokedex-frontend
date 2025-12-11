@@ -1,41 +1,49 @@
 // ===========================================
-
 // DESIGN SYSTEM - VARIABLES
-
 // ===========================================
 
+// ----- VARIABLES CSS (pour utilisation avec var()) -----
+:root {
+  // Polices
+  --font-display: 'Bowlby One', cursive;
+  --font-body: 'Quicksand', sans-serif;
+  --font-mono: 'Space Mono', monospace;
 
+  // Couleurs principales
+  --poke-red: #E3350D;
+  --poke-blue: #1E90FF;
+  --poke-yellow: #FFCB05;
+  --poke-purple: #7B68EE;
+  --poke-green: #4ADE80;
+  --poke-orange: #FB923C;
 
-// ----- COULEURS -----
+  // Fond sombre
+  --poke-dark: #1a1a2e;
+  --poke-darker: #0f0f1a;
 
+  // Texte
+  --text-white: #ffffff;
+  --text-gray-100: #f3f4f6;
+  --text-gray-300: #d1d5db;
+  --text-gray-400: #9ca3af;
+  --text-gray-500: #6b7280;
+}
+
+// ----- COULEURS (SCSS) -----
 $poke-red: #E3350D;
-
 $poke-blue: #1E90FF;
-
 $poke-yellow: #FFCB05;
-
 $poke-purple: #7B68EE;
-
 $poke-green: #4ADE80;
-
 $poke-orange: #FB923C;
 
-
-
 // Fond sombre
-
 $poke-dark: #1a1a2e;
-
 $poke-darker: #0f0f1a;
 
-
-
 // Texte
-
 $text-white: #ffffff;
-
 $text-gray-400: #9ca3af;
-
 $text-gray-500: #6b7280;
 
 

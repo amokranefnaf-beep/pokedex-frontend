@@ -1,97 +1,301 @@
+/* ===========================================
+   COLLECTION PAGE
+   =========================================== */
 .collection {
-
-  padding: 2rem;
-
-
-
-  h2 {
-
-    margin-bottom: 1.5rem;
-
-    color: #333;
-
-  }
-
+  min-height: 100vh;
+  padding: 4rem 0;
+  background: linear-gradient(to bottom, var(--poke-darker, #0f0f1a), var(--poke-dark, #1a1a2e));
 }
 
-
-
-.cards-grid {
-
-  display: grid;
-
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-
-  gap: 1.5rem;
-
-  justify-items: center;
-
+.collection__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
 
-
-
-.loading, .error, .empty {
-
-  text-align: center;
-
-  padding: 3rem;
-
-  font-size: 1.2rem;
-
-}
-
-
-
-.error { color: #e74c3c; }
-
-
-
-.pagination {
-
+/* ===== HEADER ===== */
+.collection__header {
   display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
 
-  justify-content: center;
+@media (min-width: 768px) {
+  .collection__header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+}
 
+.section-title {
+  font-family: var(--font-display, 'Bowlby One', cursive);
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-white, #ffffff);
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  background: var(--poke-red, #E3350D);
+  border-radius: 50%;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 3rem;
+  }
+}
+
+.collection__subtitle {
+  color: var(--text-gray-400, #9ca3af);
+  font-size: 1rem;
+}
+
+.count-highlight {
+  color: var(--poke-yellow, #FFCB05);
+  font-weight: 700;
+}
+
+.count-total {
+  color: var(--text-gray-300, #d1d5db);
+  font-weight: 600;
+}
+
+/* ===== FILTERS ===== */
+.collection__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-white, #ffffff);
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.filter-btn--active {
+  background: var(--poke-red, #E3350D);
+  border-color: var(--poke-red, #E3350D);
+}
+
+.filter-btn--active:active {
+  transform: scale(0.95);
+}
+
+/* ===== LOADING ===== */
+.loading {
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
 
+.loading__spinner {
+  width: 60px;
+  height: 60px;
+  border: 4px solid rgba(227, 53, 13, 0.2);
+  border-top-color: var(--poke-red, #E3350D);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 1.5rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading p {
+  font-size: 1.125rem;
+  color: var(--text-gray-400, #9ca3af);
+}
+
+/* ===== ERROR ===== */
+.error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 1rem;
+  padding: 3rem 2rem;
+  text-align: center;
+}
 
-  margin-top: 2rem;
+.error p {
+  font-size: 1.125rem;
+  color: #ef4444;
+}
 
+.btn-retry {
+  padding: 0.75rem 1.5rem;
+  background: var(--poke-red, #E3350D);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
 
+.btn-retry:hover {
+  background: #c72d0a;
+  transform: scale(1.05);
+}
 
-  button {
+/* ===== CARDS GRID ===== */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  margin-bottom: 3rem;
+}
 
-    padding: 0.5rem 1rem;
+/* ===== EMPTY STATE ===== */
+.empty {
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
 
-    border: none;
+.empty__content {
+  text-align: center;
+  max-width: 400px;
+}
 
-    border-radius: 8px;
+.empty__icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+}
 
-    background: #667eea;
+.empty h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-white, #ffffff);
+}
 
-    color: white;
+.empty p {
+  color: var(--text-gray-400, #9ca3af);
+  margin-bottom: 1.5rem;
+}
 
-    cursor: pointer;
+.btn-primary {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--poke-red, #E3350D);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
 
+.btn-primary:hover {
+  background: #c72d0a;
+  transform: scale(1.05);
+}
 
+.btn-primary:active {
+  transform: scale(0.95);
+}
 
-    &:disabled {
+/* ===== PAGINATION ===== */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
 
-      background: #ccc;
+.pagination__btn,
+.pagination__number {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-white, #ffffff);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
 
-      cursor: not-allowed;
+.pagination__btn .icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
 
-    }
+.pagination__btn:hover:not(:disabled),
+.pagination__number:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
 
+.pagination__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
 
+.pagination__number--active {
+  background: var(--poke-red, #E3350D);
+  border-color: var(--poke-red, #E3350D);
+}
 
-    &:hover:not(:disabled) {
+.pagination span {
+  color: var(--text-gray-500, #6b7280);
+  padding: 0 0.5rem;
+}
 
-      background: #5a6fd6;
-
-    }
-
+/* ===== RESPONSIVE ===== */
+@media (max-width: 640px) {
+  .collection {
+    padding: 2rem 0;
   }
 
+  .collection__header {
+    margin-bottom: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .section-title::before {
+    display: none;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+  }
 }

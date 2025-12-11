@@ -1,208 +1,196 @@
-/* Header principal */
-
+/* ===========================================
+   HEADER - Navigation
+   =========================================== */
 .header {
-
-  position: sticky;
-
+  position: fixed;
   top: 0;
-
-  z-index: 50;
-
+  left: 0;
+  right: 0;
+  z-index: var(--z-fixed, 100);
   background: rgba(255, 255, 255, 0.05);
-
   backdrop-filter: blur(10px);
-
-  -webkit-backdrop-filter: blur(10px);
-
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-
-
-.header-container {
-
+.header__container {
   max-width: 1280px;
-
   margin: 0 auto;
-
   padding: 1rem 1.5rem;
-
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
-}
-
-
-
-/* Logo */
-
-.header-logo {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 0.5rem;
-
-  color: white;
-
-  text-decoration: none;
-
-}
-
-
-
-.pokeball-icon {
-
-  width: 40px;
-
-  height: 40px;
-
-  color: white;
-
-  transition: transform 0.3s ease;
-
-}
-
-
-
-.pokeball-icon:hover {
-
-  transform: rotate(20deg);
-
-}
-
-
-/*noinspection CssUnresolvedCustomProperty*/
-.header-title {
-
-  font-family: var(--font-display);
-
-  font-size: 1.5rem;
-
-}
-
-
-
-/* Navigation */
-
-.header-nav {
-
-  display: flex;
-
   gap: 2rem;
-
 }
 
+/* ===== LOGO ===== */
+.header__logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
 
+.header__logo-link:hover {
+  transform: scale(1.05);
+}
+
+.header__logo {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background-color: var(--poke-red, #E3350D);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.header__logo:hover {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.header__pokeball {
+  width: 2rem;
+  height: 2rem;
+}
+
+.header__brand {
+  font-family: var(--font-display, 'Bowlby One', cursive);
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, var(--poke-red, #E3350D), var(--poke-yellow, #FFCB05), var(--poke-blue, #1E90FF));
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 4s ease infinite;
+}
+
+/* ===== NAVIGATION ===== */
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex: 1;
+  justify-content: center;
+}
 
 .nav-link {
-
   position: relative;
-
-  color: #9ca3af;
-
-  font-weight: 500;
-
+  font-weight: 600;
+  color: var(--text-gray-300, #d1d5db);
   text-decoration: none;
-
-  transition: color 0.2s ease;
-
+  transition: color 0.3s ease;
+  padding-bottom: 0.25rem;
 }
 
-
-
-/* Ligne rouge sous le lien */
+.nav-link:hover {
+  color: var(--poke-red, #E3350D);
+}
 
 .nav-link::after {
-
   content: '';
-
   position: absolute;
-
   bottom: -5px;
-
   left: 50%;
-
   width: 0;
-
   height: 3px;
-
-  background: red;
-
-  border-radius: 2px;
-
+  background: var(--poke-red, #E3350D);
   transition: all 0.3s ease;
-
   transform: translateX(-50%);
-
+  border-radius: 2px;
 }
-
-
-
-.nav-link:hover,
-
-.nav-link.active {
-
-  color: white;
-
-}
-
-
 
 .nav-link:hover::after,
-
 .nav-link.active::after {
-
   width: 100%;
-
 }
 
+.nav-link.active {
+  color: var(--text-white, #ffffff);
+}
 
-
-/* Badge statistiques */
-
-.stat-badge {
-
-  background: rgba(255, 255, 255, 0.1);
-
-  backdrop-filter: blur(10px);
-
-  padding: 0.5rem 1rem;
-
-  border-radius: 9999px;
-
-  border: 1px solid rgba(255, 255, 255, 0.1);
-
+/* ===== USER ACTIONS ===== */
+.header__actions {
   display: flex;
-
   align-items: center;
-
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
-
-
-.stat-value {
-
-  font-family: monospace;
-
-  font-weight: 700;
-
-  color: yellow;
-
+.header__notification {
+  position: relative;
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--text-white, #ffffff);
+  transition: background-color 0.2s ease;
 }
 
+.header__notification:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
+.header__notification .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
 
-.stat-label {
+.notification-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--poke-red, #E3350D);
+  border-radius: 50%;
+  font-size: 0.625rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
 
-  font-size: 0.875rem;
+.header__profile {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-full, 9999px);
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
 
-  color: #9ca3af;
+.header__profile:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
 
+.profile-avatar {
+  width: 2rem;
+  height: 2rem;
+}
+
+.profile-name {
+  font-weight: 600;
+  color: var(--text-white, #ffffff);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .header__nav {
+    display: none;
+  }
+
+  .profile-name {
+    display: none;
+  }
+
+  .header__container {
+    padding: 1rem;
+  }
+
+  .header__brand {
+    font-size: 1.25rem;
+  }
 }

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PokéDex Collection - Maquette</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwindcss.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'display': ['Bowlby One', 'cursive'],
+            'body': ['Quicksand', 'sans-serif'],
+            'mono': ['Space Mono', 'monospace']
+          },
+          colors: {
+            'poke-red': '#E3350D',
+            'poke-blue': '#1E90FF',
+            'poke-yellow': '#FFCB05',
+            'poke-dark': '#1a1a2e',
+            'poke-darker': '#0f0f1a',
+            'poke-purple': '#7B68EE',
+            'poke-green': '#4ADE80',
+            'poke-orange': '#FB923C'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Quicksand', sans-serif; background: #0f0f1a; color: white; overflow-x: hidden; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1a1a2e; }
+    ::-webkit-scrollbar-thumb { background: #E3350D; border-radius: 4px; }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(2deg); }
+    }
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(227, 53, 13, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(227, 53, 13, 0.8), 0 0 60px rgba(227, 53, 13, 0.4); }
+    }
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes bounce-in {
+      0% { transform: scale(0); opacity: 0; }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes slide-up {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes rotate-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .float { animation: float 6s ease-in-out infinite; }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    .shimmer {
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite;
+    }
+    .bounce-in { animation: bounce-in 0.6s ease-out forwards; }
+    .slide-up { animation: slide-up 0.5s ease-out forwards; }
+    .rotate-slow { animation: rotate-slow 20s linear infinite; }
+
+    /* Gradient Text */
+    .gradient-text {
+      background: linear-gradient(135deg, #E3350D, #FFCB05, #1E90FF);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 4s ease infinite;
+    }
+
+    /* Card Hover Effects */
+    .pokemon-card {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      transform-style: preserve-3d;
+    }
+    .pokemon-card:hover {
+      transform: translateY(-15px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+    }
+    .pokemon-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #E3350D, #FFCB05, #1E90FF, #7B68EE);
+      background-size: 300% 300%;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+      animation: gradient-shift 3s ease infinite;
+    }
+    .pokemon-card:hover::before { opacity: 1; }
+
+    /* Type badges */
+    .type-fire { background: linear-gradient(135deg, #F08030, #DD2C00); }
+    .type-water { background: linear-gradient(135deg, #6890F0, #1565C0); }
+    .type-grass { background: linear-gradient(135deg, #78C850, #2E7D32); }
+    .type-electric { background: linear-gradient(135deg, #F8D030, #F9A825); }
+    .type-psychic { background: linear-gradient(135deg, #F85888, #AD1457); }
+    .type-dragon { background: linear-gradient(135deg, #7038F8, #4527A0); }
+    .type-fairy { background: linear-gradient(135deg, #EE99AC, #EC407A); }
+    .type-normal { background: linear-gradient(135deg, #A8A878, #757575); }
+    .type-fighting { background: linear-gradient(135deg, #C03028, #B71C1C); }
+    .type-ghost { background: linear-gradient(135deg, #705898, #4A148C); }
+
+    /* Glass morphism */
+    .glass {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Pokeball decoration */
+    .pokeball-bg {
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      border: 30px solid rgba(227, 53, 13, 0.1);
+      right: -200px;
+      top: -200px;
+      z-index: 0;
+    }
+    .pokeball-bg::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 15px;
+      background: rgba(227, 53, 13, 0.1);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .pokeball-bg::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 15px solid rgba(227, 53, 13, 0.1);
+      background: transparent;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Navigation active state */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      width: 0;
+      height: 3px;
+      background: #E3350D;
+      transition: all 0.3s;
+      transform: translateX(-50%);
+      border-radius: 2px;
+    }
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Stats bar */
+    .stat-bar {
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .stat-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 1s ease-out;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(5px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-content {
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s;
+    }
+    .modal-overlay.active .modal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    /* Section titles */
+    .section-title {
+      position: relative;
+      display: inline-block;
+    }
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 10px;
+      height: 10px;
+      background: #E3350D;
+      border-radius: 50%;
+    }
+
+    /* Input focus */
+    .input-field:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(227, 53, 13, 0.3);
+    }
+
+    /* Button press effect */
+    .btn-press:active {
+      transform: scale(0.95);
+    }
+
+    /* Rarity effects */
+    .rarity-legendary {
+      background: linear-gradient(135deg, #FFD700, #FFA500, #FFD700);
+      background-size: 200% 200%;
+      animation: gradient-shift 2s ease infinite;
+    }
+    .rarity-rare {
+      background: linear-gradient(135deg, #9C27B0, #E040FB);
+    }
+    .rarity-common {
+      background: linear-gradient(135deg, #78909C, #607D8B);
+    }
+
+    /* Page sections */
+    section { min-height: 100vh; padding: 100px 0; position: relative; }
+
+    /* Noise texture overlay */
+    .noise-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    }
+  </style>
+</head>
+<body>
+  <!-- Noise Overlay -->
+  <div class="noise-overlay"></div>
+
+  <!-- Pokeball Background Decoration -->
+  <div class="pokeball-bg rotate-slow"></div>
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 glass">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#home" class="flex items-center gap-3 group">
+          <div class="w-12 h-12 rounded-full bg-poke-red flex items-center justify-center group-hover:pulse-glow transition-all">
+            <svg class="w-8 h-8" viewBox="0 0 100 100" fill="white">
+              <circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="8"/>
+              <line x1="5" y1="50" x2="95" y2="50" stroke="white" stroke-width="8"/>
+              <circle cx="50" cy="50" r="15" fill="white"/>
+              <circle cx="50" cy="50" r="8" fill="#E3350D"/>
+            </svg>
+          </div>
+          <span class="font-display text-2xl gradient-text">PokéDex</span>
+        </a>
+
+        <!-- Nav Links -->
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#home" class="nav-link active font-semibold hover:text-poke-red transition-colors">Accueil</a>
+          <a href="#collection" class="nav-link font-semibold hover:text-poke-red transition-colors">Collection</a>
+          <a href="#search" class="nav-link font-semibold hover:text-poke-red transition-colors">Recherche</a>
+          <a href="#trades" class="nav-link font-semibold hover:text-poke-red transition-colors">Échanges</a>
+          <a href="#leaderboard" class="nav-link font-semibold hover:text-poke-red transition-colors">Classement</a>
+        </div>
+
+        <!-- User Actions -->
+        <div class="flex items-center gap-4">
+          <button class="relative p-2 hover:bg-white/10 rounded-full transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+            </svg>
+            <span class="absolute top-0 right-0 w-4 h-4 bg-poke-red rounded-full text-xs flex items-center justify-center">3</span>
+          </button>
+          <a href="#profile" class="flex items-center gap-3 glass px-4 py-2 rounded-full hover:bg-white/10 transition-colors">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Avatar" class="w-8 h-8">
+            <span class="font-semibold hidden sm:block">Dresseur</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="flex items-center justify-center relative overflow-hidden">
+    <!-- Floating Pokemon decorations -->
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" class="absolute top-32 left-10 w-32 opacity-20 float" style="animation-delay: 0s;">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png" alt="Mewtwo" class="absolute bottom-20 right-10 w-40 opacity-20 float" style="animation-delay: 2s;">
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png" alt="Blastoise" class="absolute top-40 right-40 w-28 opacity-15 float" style="animation-delay: 4s;">
+
+    <div class="max-w-7xl mx-auto px-6 text-center relative z-10">
+      <div class="slide-up">
+        <span class="inline-block px-4 py-2 glass rounded-full text-sm font-mono text-poke-yellow mb-6">
+          🎮 Nouvelle version 2.0 disponible !
+        </span>
+        <h1 class="font-display text-5xl md:text-7xl lg:text-8xl mb-6">
+          <span class="gradient-text">COLLECTIONNE</span><br>
+          <span class="text-white">TES POKÉMON</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-10">
+          Recherche, collectionne et échange tes cartes Pokémon préférées avec des dresseurs du monde entier.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#collection" class="btn-press px-8 py-4 bg-poke-red hover:bg-red-600 rounded-full font-bold text-lg transition-all hover:scale-105 pulse-glow">
+            🔥 Voir ma collection
+          </a>
+          <a href="#search" class="btn-press px-8 py-4 glass hover:bg-white/10 rounded-full font-bold text-lg transition-all hover:scale-105">
+            🔍 Rechercher un Pokémon
+          </a>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-8 mt-16 max-w-xl mx-auto">
+          <div class="text-center">
+            <div class="font-display text-4xl text-poke-yellow">1,025</div>
+            <div class="text-gray-500 text-sm">Pokémon disponibles</div>
+          </div>
+          <div class="text-center">
+            <div class="font-display text-4xl text-poke-blue">12,547</div>
+            <div class="text-gray-500 text-sm">Dresseurs actifs</div>
+          </div>
+          <div class="text-center">
+            <div class="font-display text-4xl text-poke-green">89,234</div>
+            <div class="text-gray-500 text-sm">Échanges réalisés</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Collection Section -->
+  <section id="collection" class="bg-gradient-to-b from-poke-darker to-poke-dark">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <h2 class="section-title font-display text-4xl md:text-5xl mb-2">MA COLLECTION</h2>
+          <p class="text-gray-400">Tu possèdes <span class="text-poke-yellow font-bold">127</span> cartes sur 1,025</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="flex flex-wrap gap-3">
+          <button class="px-4 py-2 bg-poke-red rounded-full font-semibold text-sm">Tous</button>
+          <button class="px-4 py-2 glass rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">⭐ Favoris</button>
+          <button class="px-4 py-2 glass rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">🔥 Feu</button>
+          <button class="px-4 py-2 glass rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">💧 Eau</button>
+          <button class="px-4 py-2 glass rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">🌿 Plante</button>
+          <button class="px-4 py-2 glass rounded-full font-semibold text-sm hover:bg-white/10 transition-colors">⚡ Électrik</button>
+        </div>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <!-- Card 1 - Pikachu (Legendary) -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group" onclick="openModal('pikachu')">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-legendary rounded-full text-xs font-bold text-black">★ LÉGENDAIRE</span>
+          </div>
+          <div class="absolute top-3 left-3 z-10">
+            <button class="w-8 h-8 glass rounded-full flex items-center justify-center hover:bg-poke-yellow/30 transition-colors">
+              <svg class="w-5 h-5 text-poke-yellow fill-current" viewBox="0 0 24 24">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            </button>
+          </div>
+          <div class="p-4 pt-12">
+            <div class="aspect-square bg-gradient-to-br from-yellow-400/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#025</span>
+              <span class="type-electric px-2 py-0.5 rounded text-xs font-bold">⚡ Électrik</span>
+            </div>
+            <h3 class="font-display text-xl">PIKACHU</h3>
+          </div>
+        </div>
+
+        <!-- Card 2 - Charizard -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-rare rounded-full text-xs font-bold">★ RARE</span>
+          </div>
+          <div class="p-4 pt-8">
+            <div class="aspect-square bg-gradient-to-br from-orange-500/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#006</span>
+              <div class="flex gap-1">
+                <span class="type-fire px-2 py-0.5 rounded text-xs font-bold">🔥</span>
+                <span class="type-dragon px-2 py-0.5 rounded text-xs font-bold">🐲</span>
+              </div>
+            </div>
+            <h3 class="font-display text-xl">DRACAUFEU</h3>
+          </div>
+        </div>
+
+        <!-- Card 3 - Mewtwo -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-legendary rounded-full text-xs font-bold text-black">★ LÉGENDAIRE</span>
+          </div>
+          <div class="p-4 pt-8">
+            <div class="aspect-square bg-gradient-to-br from-purple-500/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/150.png" alt="Mewtwo" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#150</span>
+              <span class="type-psychic px-2 py-0.5 rounded text-xs font-bold">🔮 Psy</span>
+            </div>
+            <h3 class="font-display text-xl">MEWTWO</h3>
+          </div>
+        </div>
+
+        <!-- Card 4 - Blastoise -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-rare rounded-full text-xs font-bold">★ RARE</span>
+          </div>
+          <div class="p-4 pt-8">
+            <div class="aspect-square bg-gradient-to-br from-blue-500/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png" alt="Blastoise" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#009</span>
+              <span class="type-water px-2 py-0.5 rounded text-xs font-bold">💧 Eau</span>
+            </div>
+            <h3 class="font-display text-xl">TORTANK</h3>
+          </div>
+        </div>
+
+        <!-- Card 5 - Venusaur -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-rare rounded-full text-xs font-bold">★ RARE</span>
+          </div>
+          <div class="p-4 pt-8">
+            <div class="aspect-square bg-gradient-to-br from-green-500/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png" alt="Venusaur" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#003</span>
+              <div class="flex gap-1">
+                <span class="type-grass px-2 py-0.5 rounded text-xs font-bold">🌿</span>
+              </div>
+            </div>
+            <h3 class="font-display text-xl">FLORIZARRE</h3>
+          </div>
+        </div>
+
+        <!-- Card 6 - Gengar -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="p-4">
+            <div class="aspect-square bg-gradient-to-br from-purple-800/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png" alt="Gengar" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#094</span>
+              <span class="type-ghost px-2 py-0.5 rounded text-xs font-bold">👻 Spectre</span>
+            </div>
+            <h3 class="font-display text-xl">ECTOPLASMA</h3>
+          </div>
+        </div>
+
+        <!-- Card 7 - Dragonite -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-rare rounded-full text-xs font-bold">★ RARE</span>
+          </div>
+          <div class="p-4 pt-8">
+            <div class="aspect-square bg-gradient-to-br from-orange-400/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png" alt="Dragonite" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#149</span>
+              <span class="type-dragon px-2 py-0.5 rounded text-xs font-bold">🐲 Dragon</span>
+            </div>
+            <h3 class="font-display text-xl">DRACOLOSSE</h3>
+          </div>
+        </div>
+
+        <!-- Card 8 - Eevee -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="p-4">
+            <div class="aspect-square bg-gradient-to-br from-amber-400/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png" alt="Eevee" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#133</span>
+              <span class="type-normal px-2 py-0.5 rounded text-xs font-bold">⚪ Normal</span>
+            </div>
+            <h3 class="font-display text-xl">ÉVOLI</h3>
+          </div>
+        </div>
+
+        <!-- Card 9 - Lucario -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="absolute top-3 right-3 z-10">
+            <span class="px-2 py-1 rarity-rare rounded-full text-xs font-bold">★ RARE</span>
+          </div>
+          <div class="p-4 pt-8">
+            <div class="aspect-square bg-gradient-to-br from-blue-600/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png" alt="Lucario" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#448</span>
+              <span class="type-fighting px-2 py-0.5 rounded text-xs font-bold">👊 Combat</span>
+            </div>
+            <h3 class="font-display text-xl">LUCARIO</h3>
+          </div>
+        </div>
+
+        <!-- Card 10 - Sylveon -->
+        <div class="pokemon-card relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer group">
+          <div class="p-4">
+            <div class="aspect-square bg-gradient-to-br from-pink-400/20 to-transparent rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png" alt="Sylveon" class="w-full h-full object-contain drop-shadow-2xl">
+            </div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-mono text-xs text-gray-500">#700</span>
+              <span class="type-fairy px-2 py-0.5 rounded text-xs font-bold">🧚 Fée</span>
+            </div>
+            <h3 class="font-display text-xl">NYMPHALI</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="flex justify-center mt-12 gap-2">
+        <button class="w-10 h-10 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+        <button class="w-10 h-10 bg-poke-red rounded-lg font-bold">1</button>
+        <button class="w-10 h-10 glass rounded-lg hover:bg-white/10 transition-colors">2</button>
+        <button class="w-10 h-10 glass rounded-lg hover:bg-white/10 transition-colors">3</button>
+        <span class="w-10 h-10 flex items-center justify-center">...</span>
+        <button class="w-10 h-10 glass rounded-lg hover:bg-white/10 transition-colors">13</button>
+        <button class="w-10 h-10 glass rounded-lg flex items-center justify-center hover:bg-white/10 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section id="search" class="bg-poke-dark">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="font-display text-4xl md:text-5xl mb-4">RECHERCHER UN <span class="gradient-text">POKÉMON</span></h2>
+        <p class="text-gray-400 text-lg">Trouve et ajoute des Pokémon à ta collection depuis la PokéAPI</p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="max-w-3xl mx-auto mb-12">
+        <div class="relative">
+          <input type="text" placeholder="Rechercher par nom ou numéro..."
+                 class="input-field w-full px-6 py-5 pl-14 bg-poke-darker border-2 border-white/10 rounded-2xl text-lg font-medium focus:border-poke-red transition-colors">
+          <svg class="w-6 h-6 absolute left-5 top-1/2 -translate-y-1/2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+          </svg>
+          <button class="absolute right-3 top-1/2 -translate-y-1/2 px-6 py-3 bg-poke-red hover:bg-red-600 rounded-xl font-bold transition-colors btn-press">
+            Rechercher
+          </button>
+        </div>
+
+        <!-- Quick Filters -->
+        <div class="flex flex-wrap gap-3 mt-6 justify-center">
+          <span class="text-gray-500">Filtres :</span>
+          <select class="glass px-4 py-2 rounded-lg bg-transparent border-none focus:outline-none cursor-pointer">
+            <option value="">Génération</option>
+            <option value="1">Génération I</option>
+            <option value="2">Génération II</option>
+            <option value="3">Génération III</option>
+            <option value="4">Génération IV</option>
+            <option value="5">Génération V</option>
+          </select>
+          <select class="glass px-4 py-2 rounded-lg bg-transparent border-none focus:outline-none cursor-pointer">
+            <option value="">Type</option>
+            <option value="fire">🔥 Feu</option>
+            <option value="water">💧 Eau</option>
+            <option value="grass">🌿 Plante</option>
+            <option value="electric">⚡ Électrik</option>
+            <option value="psychic">🔮 Psy</option>
+          </select>
+          <select class="glass px-4 py-2 rounded-lg bg-transparent border-none focus:outline-none cursor-pointer">
+            <option value="">Rareté</option>
+            <option value="common">Commun</option>
+            <option value="rare">Rare</option>
+            <option value="legendary">Légendaire</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Search Results Preview -->
+      <div class="glass rounded-3xl p-8">
+        <div class="flex items-center justify-between mb-6">
+          <h3 class="font-display text-2xl">RÉSULTATS</h3>
+          <span class="text-gray-400">151 Pokémon trouvés</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Result Item -->
+          <div class="flex items-center gap-4 p-4 bg-poke-darker rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="Bulbasaur" class="w-20 h-20 object-contain group-hover:scale-110 transition-transform">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-mono text-xs text-gray-500">#001</span>
+                <span class="type-grass px-2 py-0.5 rounded text-xs font-bold">🌿</span>
+              </div>
+              <h4 class="font-display text-lg">BULBIZARRE</h4>
+              <p class="text-sm text-gray-500">Génération I</p>
+            </div>
+            <button class="px-4 py-2 bg-poke-green/20 text-poke-green rounded-lg font-semibold hover:bg-poke-green hover:text-black transition-colors btn-press">
+              + Ajouter
+            </button>
+          </div>
+
+          <div class="flex items-center gap-4 p-4 bg-poke-darker rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" alt="Charmander" class="w-20 h-20 object-contain group-hover:scale-110 transition-transform">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-mono text-xs text-gray-500">#004</span>
+                <span class="type-fire px-2 py-0.5 rounded text-xs font-bold">🔥</span>
+              </div>
+              <h4 class="font-display text-lg">SALAMÈCHE</h4>
+              <p class="text-sm text-gray-500">Génération I</p>
+            </div>
+            <button class="px-4 py-2 bg-poke-green/20 text-poke-green rounded-lg font-semibold hover:bg-poke-green hover:text-black transition-colors btn-press">
+              + Ajouter
+            </button>
+          </div>
+
+          <div class="flex items-center gap-4 p-4 bg-poke-darker rounded-xl hover:bg-white/5 transition-colors cursor-pointer group">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png" alt="Squirtle" class="w-20 h-20 object-contain group-hover:scale-110 transition-transform">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="font-mono text-xs text-gray-500">#007</span>
+                <span class="type-water px-2 py-0.5 rounded text-xs font-bold">💧</span>
+              </div>
+              <h4 class="font-display text-lg">CARAPUCE</h4>
+              <p class="text-sm text-gray-500">Génération I</p>
+            </div>
+            <button class="px-4 py-2 glass text-gray-400 rounded-lg font-semibold cursor-not-allowed">
+              ✓ Possédé
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trades Section -->
+  <section id="trades" class="bg-gradient-to-b from-poke-dark to-poke-darker">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <h2 class="section-title font-display text-4xl md:text-5xl mb-2">ÉCHANGES</h2>
+          <p class="text-gray-400">Propose ou accepte des échanges avec d'autres dresseurs</p>
+        </div>
+        <button class="btn-press px-6 py-3 bg-poke-purple hover:bg-purple-600 rounded-xl font-bold transition-colors flex items-center gap-2">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+          </svg>
+          Proposer un échange
+        </button>
+      </div>
+
+      <!-- Trade Cards -->
+      <div class="space-y-6">
+        <!-- Pending Trade -->
+        <div class="glass rounded-2xl p-6 border-l-4 border-poke-yellow">
+          <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center gap-4">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png" alt="Avatar" class="w-12 h-12 rounded-full bg-poke-dark">
+              <div>
+                <h4 class="font-bold text-lg">SnorlaxMaster42</h4>
+                <span class="text-sm text-poke-yellow">⏳ En attente de ta réponse</span>
+              </div>
+            </div>
+            <span class="text-gray-500 text-sm">Il y a 2 heures</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+            <!-- Offered -->
+            <div class="bg-poke-darker rounded-xl p-4">
+              <p class="text-sm text-gray-400 mb-3">Il propose :</p>
+              <div class="flex gap-2">
+                <div class="flex-1 bg-poke-dark rounded-lg p-3 text-center">
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/143.png" alt="Snorlax" class="w-16 h-16 mx-auto">
+                  <p class="text-sm font-bold mt-2">Ronflex</p>
+                </div>
+                <div class="flex-1 bg-poke-dark rounded-lg p-3 text-center">
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/131.png" alt="Lapras" class="w-16 h-16 mx-auto">
+                  <p class="text-sm font-bold mt-2">Lokhlass</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Arrow -->
+            <div class="hidden md:flex justify-center">
+              <div class="w-16 h-16 rounded-full bg-poke-purple/20 flex items-center justify-center">
+                <svg class="w-8 h-8 text-poke-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Requested -->
+            <div class="bg-poke-darker rounded-xl p-4">
+              <p class="text-sm text-gray-400 mb-3">Il demande :</p>
+              <div class="flex gap-2">
+                <div class="flex-1 bg-poke-dark rounded-lg p-3 text-center">
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png" alt="Charizard" class="w-16 h-16 mx-auto">
+                  <p class="text-sm font-bold mt-2">Dracaufeu</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex justify-end gap-3 mt-6">
+            <button class="btn-press px-6 py-2 glass hover:bg-white/10 rounded-lg font-semibold transition-colors">
+              ❌ Refuser
+            </button>
+            <button class="btn-press px-6 py-2 glass hover:bg-white/10 rounded-lg font-semibold transition-colors">
+              💬 Contre-proposer
+            </button>
+            <button class="btn-press px-6 py-2 bg-poke-green hover:bg-green-600 rounded-lg font-semibold transition-colors">
+              ✓ Accepter
+            </button>
+          </div>
+        </div>
+
+        <!-- Completed Trade -->
+        <div class="glass rounded-2xl p-6 border-l-4 border-poke-green opacity-75">
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png" alt="Avatar" class="w-12 h-12 rounded-full bg-poke-dark">
+              <div>
+                <h4 class="font-bold text-lg">GhostHunter_X</h4>
+                <span class="text-sm text-poke-green">✓ Échange complété</span>
+              </div>
+            </div>
+            <span class="text-gray-500 text-sm">Hier</span>
+          </div>
+          <p class="text-gray-400">Tu as échangé <span class="text-white font-bold">Machamp</span> contre <span class="text-white font-bold">Ectoplasma</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Leaderboard Section -->
+  <section id="leaderboard" class="bg-poke-darker">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-12">
+        <h2 class="font-display text-4xl md:text-5xl mb-4">🏆 <span class="gradient-text">CLASSEMENT</span></h2>
+        <p class="text-gray-400 text-lg">Les meilleurs collectionneurs de la communauté</p>
+      </div>
+
+      <!-- Top 3 Podium -->
+      <div class="flex justify-center items-end gap-4 mb-12">
+        <!-- 2nd Place -->
+        <div class="text-center">
+          <div class="glass rounded-2xl p-6 w-48">
+            <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-gray-300 to-gray-400 flex items-center justify-center text-3xl font-display text-gray-800 mb-4">2</div>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" alt="Avatar" class="w-16 h-16 mx-auto rounded-full bg-poke-dark mb-3">
+            <h4 class="font-bold">FireMaster99</h4>
+            <p class="text-2xl font-display text-gray-300">892</p>
+            <p class="text-xs text-gray-500">cartes</p>
+          </div>
+          <div class="h-24 glass rounded-t-none rounded-b-2xl -mt-2"></div>
+        </div>
+
+        <!-- 1st Place -->
+        <div class="text-center -mt-8">
+          <div class="glass rounded-2xl p-8 w-56 border-2 border-poke-yellow relative overflow-hidden">
+            <div class="absolute inset-0 shimmer pointer-events-none"></div>
+            <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center text-4xl font-display text-yellow-900 mb-4 pulse-glow">👑</div>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png" alt="Avatar" class="w-20 h-20 mx-auto rounded-full bg-poke-dark mb-3">
+            <h4 class="font-bold text-xl">MewtwoLegend</h4>
+            <p class="text-3xl font-display text-poke-yellow">1,024</p>
+            <p class="text-sm text-gray-500">cartes</p>
+          </div>
+          <div class="h-32 glass rounded-t-none rounded-b-2xl -mt-2 bg-gradient-to-b from-poke-yellow/10 to-transparent"></div>
+        </div>
+
+        <!-- 3rd Place -->
+        <div class="text-center">
+          <div class="glass rounded-2xl p-6 w-48">
+            <div class="w-16 h-16 mx-auto rounded-full bg-gradient-to-br from-orange-600 to-orange-800 flex items-center justify-center text-3xl font-display text-orange-200 mb-4">3</div>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png" alt="Avatar" class="w-16 h-16 mx-auto rounded-full bg-poke-dark mb-3">
+            <h4 class="font-bold">WaterKing</h4>
+            <p class="text-2xl font-display text-orange-400">756</p>
+            <p class="text-xs text-gray-500">cartes</p>
+          </div>
+          <div class="h-16 glass rounded-t-none rounded-b-2xl -mt-2"></div>
+        </div>
+      </div>
+
+      <!-- Rest of Leaderboard -->
+      <div class="max-w-2xl mx-auto">
+        <div class="glass rounded-2xl overflow-hidden">
+          <div class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors border-b border-white/5">
+            <span class="w-8 text-center font-bold text-gray-500">4</span>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Avatar" class="w-10 h-10 rounded-full bg-poke-dark">
+            <span class="flex-1 font-semibold">PikachuFan2000</span>
+            <span class="font-mono text-gray-400">654 cartes</span>
+          </div>
+          <div class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors border-b border-white/5">
+            <span class="w-8 text-center font-bold text-gray-500">5</span>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png" alt="Avatar" class="w-10 h-10 rounded-full bg-poke-dark">
+            <span class="flex-1 font-semibold">DragonTamer</span>
+            <span class="font-mono text-gray-400">598 cartes</span>
+          </div>
+          <div class="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors border-b border-white/5 bg-poke-red/10">
+            <span class="w-8 text-center font-bold text-poke-red">42</span>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Avatar" class="w-10 h-10 rounded-full bg-poke-dark">
+            <span class="flex-1 font-semibold">Toi (Dresseur)</span>
+            <span class="font-mono text-poke-yellow">127 cartes</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Profile Section -->
+  <section id="profile" class="bg-gradient-to-b from-poke-darker to-poke-dark">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Profile Card -->
+        <div class="glass rounded-3xl p-8 text-center relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-poke-red/20 via-transparent to-poke-blue/20"></div>
+          <div class="relative z-10">
+            <div class="relative inline-block mb-6">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Avatar" class="w-32 h-32 rounded-full bg-poke-dark border-4 border-poke-yellow">
+              <button class="absolute bottom-0 right-0 w-10 h-10 bg-poke-red rounded-full flex items-center justify-center hover:bg-red-600 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </button>
+            </div>
+            <h3 class="font-display text-3xl mb-2">DRESSEUR</h3>
+            <p class="text-gray-400 mb-6">dresseur@pokemon.com</p>
+            <div class="flex justify-center gap-2 mb-6">
+              <span class="px-3 py-1 bg-poke-yellow/20 text-poke-yellow rounded-full text-sm font-semibold">⚡ Électrik Master</span>
+              <span class="px-3 py-1 bg-poke-purple/20 text-poke-purple rounded-full text-sm font-semibold">🏆 Top 50</span>
+            </div>
+            <p class="text-sm text-gray-500">Membre depuis janvier 2024</p>
+          </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="lg:col-span-2 grid grid-cols-2 gap-4">
+          <div class="glass rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-poke-red/20 flex items-center justify-center">
+                <span class="text-2xl">📦</span>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Collection</p>
+                <p class="font-display text-2xl">127 / 1,025</p>
+              </div>
+            </div>
+            <div class="stat-bar h-3">
+              <div class="stat-fill bg-gradient-to-r from-poke-red to-poke-orange" style="width: 12.4%"></div>
+            </div>
+            <p class="text-right text-sm text-gray-500 mt-2">12.4% complété</p>
+          </div>
+
+          <div class="glass rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-poke-purple/20 flex items-center justify-center">
+                <span class="text-2xl">🔄</span>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Échanges</p>
+                <p class="font-display text-2xl">34</p>
+              </div>
+            </div>
+            <p class="text-gray-500 text-sm">🟢 28 réussis · 🔴 6 refusés</p>
+          </div>
+
+          <div class="glass rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-poke-yellow/20 flex items-center justify-center">
+                <span class="text-2xl">⭐</span>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Favoris</p>
+                <p class="font-display text-2xl">12</p>
+              </div>
+            </div>
+            <div class="flex -space-x-3">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" class="w-10 h-10 rounded-full bg-poke-dark border-2 border-poke-darker">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png" class="w-10 h-10 rounded-full bg-poke-dark border-2 border-poke-darker">
+              <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png" class="w-10 h-10 rounded-full bg-poke-dark border-2 border-poke-darker">
+              <div class="w-10 h-10 rounded-full bg-poke-dark border-2 border-poke-darker flex items-center justify-center text-xs font-bold">+9</div>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-12 h-12 rounded-xl bg-poke-blue/20 flex items-center justify-center">
+                <span class="text-2xl">📋</span>
+              </div>
+              <div>
+                <p class="text-gray-400 text-sm">Wishlist</p>
+                <p class="font-display text-2xl">8</p>
+              </div>
+            </div>
+            <p class="text-gray-500 text-sm">Pokémon recherchés</p>
+          </div>
+
+          <!-- Types Distribution -->
+          <div class="col-span-2 glass rounded-2xl p-6">
+            <h4 class="font-display text-xl mb-4">RÉPARTITION PAR TYPE</h4>
+            <div class="grid grid-cols-5 gap-3">
+              <div class="text-center">
+                <div class="w-full aspect-square rounded-xl type-electric flex items-center justify-center text-2xl mb-2">⚡</div>
+                <p class="font-bold">32</p>
+                <p class="text-xs text-gray-500">Électrik</p>
+              </div>
+              <div class="text-center">
+                <div class="w-full aspect-square rounded-xl type-fire flex items-center justify-center text-2xl mb-2">🔥</div>
+                <p class="font-bold">24</p>
+                <p class="text-xs text-gray-500">Feu</p>
+              </div>
+              <div class="text-center">
+                <div class="w-full aspect-square rounded-xl type-water flex items-center justify-center text-2xl mb-2">💧</div>
+                <p class="font-bold">28</p>
+                <p class="text-xs text-gray-500">Eau</p>
+              </div>
+              <div class="text-center">
+                <div class="w-full aspect-square rounded-xl type-grass flex items-center justify-center text-2xl mb-2">🌿</div>
+                <p class="font-bold">19</p>
+                <p class="text-xs text-gray-500">Plante</p>
+              </div>
+              <div class="text-center">
+                <div class="w-full aspect-square rounded-xl type-psychic flex items-center justify-center text-2xl mb-2">🔮</div>
+                <p class="font-bold">24</p>
+                <p class="text-xs text-gray-500">Psy</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Login/Register Modal (hidden by default) -->
+  <div id="auth-modal" class="modal-overlay">
+    <div class="modal-content glass rounded-3xl p-8 w-full max-w-md mx-4">
+      <!-- Tabs -->
+      <div class="flex mb-8">
+        <button id="login-tab" class="flex-1 py-3 font-display text-xl border-b-2 border-poke-red text-white" onclick="switchTab('login')">CONNEXION</button>
+        <button id="register-tab" class="flex-1 py-3 font-display text-xl border-b-2 border-transparent text-gray-500 hover:text-white transition-colors" onclick="switchTab('register')">INSCRIPTION</button>
+      </div>
+
+      <!-- Login Form -->
+      <div id="login-form">
+        <div class="mb-6">
+          <label class="block text-sm font-semibold mb-2 text-gray-400">Email</label>
+          <input type="email" placeholder="dresseur@pokemon.com" class="input-field w-full px-4 py-3 bg-poke-darker border-2 border-white/10 rounded-xl focus:border-poke-red transition-colors">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold mb-2 text-gray-400">Mot de passe</label>
+          <input type="password" placeholder="••••••••" class="input-field w-full px-4 py-3 bg-poke-darker border-2 border-white/10 rounded-xl focus:border-poke-red transition-colors">
+        </div>
+        <div class="flex items-center justify-between mb-6">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" class="w-4 h-4 accent-poke-red">
+            <span class="text-sm text-gray-400">Se souvenir de moi</span>
+          </label>
+          <a href="#" class="text-sm text-poke-red hover:underline">Mot de passe oublié ?</a>
+        </div>
+        <button class="btn-press w-full py-4 bg-poke-red hover:bg-red-600 rounded-xl font-bold text-lg transition-colors">
+          Se connecter
+        </button>
+      </div>
+
+      <!-- Register Form (hidden) -->
+      <div id="register-form" class="hidden">
+        <div class="mb-4">
+          <label class="block text-sm font-semibold mb-2 text-gray-400">Nom de dresseur</label>
+          <input type="text" placeholder="PikachuMaster" class="input-field w-full px-4 py-3 bg-poke-darker border-2 border-white/10 rounded-xl focus:border-poke-red transition-colors">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold mb-2 text-gray-400">Email</label>
+          <input type="email" placeholder="dresseur@pokemon.com" class="input-field w-full px-4 py-3 bg-poke-darker border-2 border-white/10 rounded-xl focus:border-poke-red transition-colors">
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold mb-2 text-gray-400">Mot de passe</label>
+          <input type="password" placeholder="••••••••" class="input-field w-full px-4 py-3 bg-poke-darker border-2 border-white/10 rounded-xl focus:border-poke-red transition-colors">
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold mb-2 text-gray-400">Confirmer le mot de passe</label>
+          <input type="password" placeholder="••••••••" class="input-field w-full px-4 py-3 bg-poke-darker border-2 border-white/10 rounded-xl focus:border-poke-red transition-colors">
+        </div>
+        <button class="btn-press w-full py-4 bg-poke-red hover:bg-red-600 rounded-xl font-bold text-lg transition-colors">
+          Créer mon compte
+        </button>
+      </div>
+
+      <!-- Close button -->
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Pokemon Detail Modal -->
+  <div id="pokemon-modal" class="modal-overlay">
+    <div class="modal-content glass rounded-3xl p-8 w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Pokemon Image -->
+        <div class="relative">
+          <div class="aspect-square bg-gradient-to-br from-yellow-400/20 via-yellow-500/10 to-transparent rounded-3xl flex items-center justify-center p-8">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Pikachu" class="w-full h-full object-contain drop-shadow-2xl float">
+          </div>
+          <div class="absolute top-4 left-4">
+            <span class="px-3 py-1 rarity-legendary rounded-full text-sm font-bold text-black">★ LÉGENDAIRE</span>
+          </div>
+          <button class="absolute top-4 right-4 w-12 h-12 glass rounded-full flex items-center justify-center hover:bg-poke-yellow/30 transition-colors">
+            <svg class="w-7 h-7 text-poke-yellow fill-current" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Pokemon Info -->
+        <div>
+          <div class="flex items-center gap-3 mb-2">
+            <span class="font-mono text-gray-500">#025</span>
+            <span class="type-electric px-3 py-1 rounded-full text-sm font-bold">⚡ Électrik</span>
+          </div>
+          <h2 class="font-display text-5xl mb-4 gradient-text">PIKACHU</h2>
+          <p class="text-gray-400 mb-6">Pikachu est capable de lâcher des décharges électriques d'intensité variable. Quand il se met en colère, il libère d'un coup toute l'énergie emmagasinée.</p>
+
+          <!-- Stats -->
+          <div class="space-y-4 mb-8">
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">PV</span>
+                <span class="font-mono">35</span>
+              </div>
+              <div class="stat-bar h-2">
+                <div class="stat-fill bg-poke-green" style="width: 35%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">Attaque</span>
+                <span class="font-mono">55</span>
+              </div>
+              <div class="stat-bar h-2">
+                <div class="stat-fill bg-poke-red" style="width: 55%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">Défense</span>
+                <span class="font-mono">40</span>
+              </div>
+              <div class="stat-bar h-2">
+                <div class="stat-fill bg-poke-blue" style="width: 40%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span class="text-gray-400">Vitesse</span>
+                <span class="font-mono">90</span>
+              </div>
+              <div class="stat-bar h-2">
+                <div class="stat-fill bg-poke-yellow" style="width: 90%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Evolution Chain -->
+          <div class="mb-8">
+            <h4 class="font-display text-lg mb-4">ÉVOLUTIONS</h4>
+            <div class="flex items-center gap-4">
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-xl bg-poke-dark flex items-center justify-center mb-2">
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/172.png" alt="Pichu" class="w-12 h-12">
+                </div>
+                <p class="text-xs">Pichu</p>
+              </div>
+              <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-xl bg-poke-yellow/20 border-2 border-poke-yellow flex items-center justify-center mb-2">
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Pikachu" class="w-12 h-12">
+                </div>
+                <p class="text-xs text-poke-yellow font-bold">Pikachu</p>
+              </div>
+              <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+              <div class="text-center">
+                <div class="w-16 h-16 rounded-xl bg-poke-dark flex items-center justify-center mb-2">
+                  <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png" alt="Raichu" class="w-12 h-12">
+                </div>
+                <p class="text-xs">Raichu</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex gap-3">
+            <button class="btn-press flex-1 py-3 bg-poke-red hover:bg-red-600 rounded-xl font-bold transition-colors">
+              🗑️ Retirer de ma collection
+            </button>
+            <button class="btn-press flex-1 py-3 bg-poke-purple hover:bg-purple-600 rounded-xl font-bold transition-colors">
+              🔄 Proposer un échange
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Close button -->
+      <button onclick="closePokemonModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full hover:bg-white/10 flex items-center justify-center transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-poke-darker py-12 border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-full bg-poke-red flex items-center justify-center">
+              <svg class="w-6 h-6" viewBox="0 0 100 100" fill="white">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="white" stroke-width="8"/>
+                <line x1="5" y1="50" x2="95" y2="50" stroke="white" stroke-width="8"/>
+                <circle cx="50" cy="50" r="15" fill="white"/>
+                <circle cx="50" cy="50" r="8" fill="#E3350D"/>
+              </svg>
+            </div>
+            <span class="font-display text-xl">PokéDex</span>
+          </div>
+          <p class="text-gray-500 text-sm">Collectionne, échange et deviens le meilleur dresseur !</p>
+        </div>
+        <div>
+          <h5 class="font-bold mb-4">Navigation</h5>
+          <ul class="space-y-2 text-gray-400 text-sm">
+            <li><a href="#home" class="hover:text-white transition-colors">Accueil</a></li>
+            <li><a href="#collection" class="hover:text-white transition-colors">Collection</a></li>
+            <li><a href="#search" class="hover:text-white transition-colors">Recherche</a></li>
+            <li><a href="#trades" class="hover:text-white transition-colors">Échanges</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-4">Ressources</h5>
+          <ul class="space-y-2 text-gray-400 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">Documentation API</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h5 class="font-bold mb-4">Légal</h5>
+          <ul class="space-y-2 text-gray-400 text-sm">
+            <li><a href="#" class="hover:text-white transition-colors">Conditions d'utilisation</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Politique de confidentialité</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <p class="text-gray-500 text-sm">© 2024 PokéDex Collection - Projet Stage BAC PRO CIEL</p>
+        <p class="text-gray-500 text-sm">Données fournies par <a href="https://pokeapi.co" class="text-poke-blue hover:underline">PokéAPI</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Tab switching for auth modal
+    function switchTab(tab) {
+      const loginTab = document.getElementById('login-tab');
+      const registerTab = document.getElementById('register-tab');
+      const loginForm = document.getElementById('login-form');
+      const registerForm = document.getElementById('register-form');
+
+      if (tab === 'login') {
+        loginTab.classList.add('border-poke-red', 'text-white');
+        loginTab.classList.remove('border-transparent', 'text-gray-500');
+        registerTab.classList.remove('border-poke-red', 'text-white');
+        registerTab.classList.add('border-transparent', 'text-gray-500');
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
+      } else {
+        registerTab.classList.add('border-poke-red', 'text-white');
+        registerTab.classList.remove('border-transparent', 'text-gray-500');
+        loginTab.classList.remove('border-poke-red', 'text-white');
+        loginTab.classList.add('border-transparent', 'text-gray-500');
+        registerForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
+    }
+
+    // Modal functions
+    function openModal(type) {
+      document.getElementById('pokemon-modal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePokemonModal() {
+      document.getElementById('pokemon-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeModal() {
+      document.getElementById('auth-modal').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Active nav link on scroll
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 200) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Close modals on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePokemonModal();
+        closeModal();
+      }
+    });
+
+    // Close modals on overlay click
+    document.getElementById('pokemon-modal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('pokemon-modal')) {
+        closePokemonModal();
+      }
+    });
+
+    document.getElementById('auth-modal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('auth-modal')) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>

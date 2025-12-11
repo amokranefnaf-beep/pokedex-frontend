@@ -1,115 +1,67 @@
 <div class="pokemon-card" [class.is-legendary]="card['rarity'] === 'LEGENDARY'">
+  <!-- Badge de rareté -->
+  <div class="card__rarity-badge" *ngIf="card['rarity'] === 'LEGENDARY' || card['rarity'] === 'RARE'">
+    <span class="rarity-badge" [ngClass]="getRarityClass()">
+      <span *ngIf="card['rarity'] === 'LEGENDARY'">★ LÉGENDAIRE</span>
+      <span *ngIf="card['rarity'] === 'RARE'">★ RARE</span>
+    </span>
+  </div>
 
   <!-- Bouton favori -->
-
-  <button class="card__favorite" (click)="onFavoriteClick()">
-
-    {{ this.card["isFavorite"] ? '❤️' : '🤍' }}
-
+  <button class="card__favorite" (click)="onFavoriteClick()" [attr.aria-label]="card['isFavorite'] ? 'Retirer des favoris' : 'Ajouter aux favoris'">
+    <svg class="favorite-icon" [class.is-favorite]="card['isFavorite']" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+    </svg>
   </button>
 
-
-
-  <!-- Numéro du Pokémon -->
-
-  <span class="card__number">#{{ this.card["pokeApiId"] | number:'3.0-0' }}</span>
-
-
-
-  <!-- Image -->
-
-  <div class="card__image-wrapper">
-
+  <!-- Container image avec gradient de fond -->
+  <div class="card__image-container">
     <img
-
-      ngSrc="this.card[" imageUrl fill/>"]"
-
-      [alt]="card.name"
-
+      [src]="card['imageUrl']"
+      [alt]="card['name']"
       class="card__image"
-
       loading="lazy">
-
   </div>
-
-
 
   <!-- Infos -->
-
   <div class="card__info">
-
-    <h3 class="card__name">{{ this.card["name"] }}</h3>
-
-
-
-    <!-- Types -->
-
-    <div class="card__types">
-
+    <!-- Numéro et Type -->
+    <div class="card__header">
+      <span class="card__number">#{{ card['pokeApiId'] | number:'3.0-0' }}</span>
       <span
-
-        *ngFor="let type of card['types']"
-
+        *ngIf="card['types'] && card['types'].length > 0"
         class="type-badge"
-
-        [ngClass]="'type-' + type.toLowerCase()">
-
-        {{ type }}
-
+        [ngClass]="'type-' + card['types'][0].toLowerCase()">
+        {{ card['types'][0] }}
       </span>
-
     </div>
 
-
+    <!-- Nom -->
+    <h3 class="card__name">{{ card['name'] | uppercase }}</h3>
 
     <!-- Stats -->
-
     <div class="card__stats">
-
       <div class="stat">
-
         <span class="stat__icon">❤️</span>
-
-        <span class="stat__value">{{ this.card["hp"] }}</span>
-
+        <span class="stat__value">{{ card['hp'] }}</span>
       </div>
-
       <div class="stat">
-
         <span class="stat__icon">⚔️</span>
-
-        <span class="stat__value">{{ this.card["attack"] }}</span>
-
+        <span class="stat__value">{{ card['attack'] }}</span>
       </div>
-
       <div class="stat">
-
         <span class="stat__icon">🛡️</span>
-
-        <span class="stat__value">{{ this.card["defense"] }}</span>
-
+        <span class="stat__value">{{ card['defense'] }}</span>
       </div>
-
       <div class="stat">
-
         <span class="stat__icon">💨</span>
-
-        <span class="stat__value">{{ this.card["speed"] }}</span>
-
+        <span class="stat__value">{{ card['speed'] }}</span>
       </div>
-
     </div>
-
   </div>
 
-
-
   <!-- Bouton supprimer -->
-
-  <button class="card__delete" (click)="onDeleteClick()">
-
+  <button class="card__delete" (click)="onDeleteClick()" aria-label="Supprimer cette carte">
     🗑️
-
   </button>
-
 </div>

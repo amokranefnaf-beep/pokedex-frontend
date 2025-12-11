@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
-import {CommonModule, NgOptimizedImage} from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 // @ts-ignore
 import { Card } from '../../models';
@@ -13,7 +13,7 @@ import { Card } from '../../models';
 
   standalone: true,
 
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [CommonModule],
 
   templateUrl: './card.component.html',
 
@@ -51,10 +51,8 @@ export class CardComponent {
   protected isInWishlist: string | undefined;
 
   getRarityClass(): string {
-
     // @ts-ignore
-    return `rarity-${this.card.rarity.toLowerCase()}`;
-
+    return `rarity-${this.card['rarity'].toLowerCase()}`;
   }
 
 
