@@ -68,7 +68,6 @@ class CollectionComponent implements OnInit {
     this.cardService.getCards(this.currentPage, 20).subscribe({
 
       next: (response: PageResponse<Card>) => {
-
         this.cards = response.content;
 
         this.totalPages = response.totalPages;
@@ -85,7 +84,7 @@ class CollectionComponent implements OnInit {
 
         this.loading = false;
 
-        console.error(err);
+        console.error();
 
       }
 
@@ -113,7 +112,7 @@ class CollectionComponent implements OnInit {
 
       },
 
-      error: (err: Error) => console.error('Erreur toggle favori', err)
+      error: (err: Error) => console.error(err)
 
     });
 
@@ -135,7 +134,7 @@ class CollectionComponent implements OnInit {
 
         },
 
-        error: (err: Error) => console.error('Erreur suppression', err)
+        error: (err: Error) => console.error(err)
 
       });
 

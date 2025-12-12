@@ -21,5 +21,4 @@ export interface PageResponse<T> {
   first: boolean;
 
   last: boolean;
-
 }

@@ -788,13 +788,13 @@ export class TradeService {
 **Fichier:** `src/app/features/collection/collection.component.ts`
 
 ```typescript
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { CollectionService } from '../../core/services/collection.service';
-import { PokemonService } from '../../core/services/pokemon.service';
-import { Pokemon, PokemonType, Rarity } from '../../shared/models/pokemon.model';
-import { CollectionFilters } from '../../shared/models/collection.model';
+import {Component, OnInit, inject, signal, computed} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {CollectionService} from '../../core/services/collection.service';
+import {PokemonService} from '../../core/services/pokemon.service';
+import {Pokemon, PokemonType, Rarity} from '../../shared/models/pokemon.model';
+import {CollectionFilters} from '../../shared/models/collection.model';
 
 /**
  * Composant d'affichage de la collection utilisateur
@@ -856,7 +856,7 @@ export class CollectionComponent implements OnInit {
         this.loading.set(false);
       },
       error: (err) => {
-        console.error('Erreur chargement collection:', err);
+        console.error(err);
         this.error.set('Impossible de charger la collection. Veuillez réessayer.');
         this.loading.set(false);
       }
@@ -935,7 +935,7 @@ export class CollectionComponent implements OnInit {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({top: 0, behavior: 'smooth'});
     }
   }
 
@@ -949,12 +949,12 @@ export class CollectionComponent implements OnInit {
         this.pokemons.update(pokemons =>
           pokemons.map(p =>
             p.id === pokemon.id
-              ? { ...p, isFavorite: !p.isFavorite }
+              ? {...p, isFavorite: !p.isFavorite}
               : p
           )
         );
       },
-      error: (err) => console.error('Erreur toggle favori:', err)
+      error: (err) => console.error(err)
     });
   }
 
@@ -969,7 +969,7 @@ export class CollectionComponent implements OnInit {
             pokemons.filter(p => p.id !== pokemon.id)
           );
         },
-        error: (err) => console.error('Erreur suppression:', err)
+        error: (err) => console.error(err)
       });
     }
   }
@@ -1592,10 +1592,10 @@ export class CollectionComponent {}
 **Fichier:** `src/app/core/services/pokemon.service.spec.ts`
 
 ```typescript
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { PokemonService } from './pokemon.service';
-import { Pokemon, PokemonType } from '../../shared/models/pokemon.model';
+import {TestBed} from '@angular/core/testing';
+import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {PokemonService} from './pokemon.service';
+import {Pokemon, PokemonType} from '../../shared/models/pokemon.model';
 
 describe('PokemonService', () => {
   let service: PokemonService;
@@ -1627,7 +1627,7 @@ describe('PokemonService', () => {
         types: [PokemonType.ELECTRIC],
         sprite: 'url',
         officialArtwork: 'url',
-        stats: { hp: 35, attack: 55, defense: 40, specialAttack: 50, specialDefense: 50, speed: 90 },
+        stats: {hp: 35, attack: 55, defense: 40, specialAttack: 50, specialDefense: 50, speed: 90},
         generation: 1,
         rarity: 'legendary'
       }
@@ -1655,7 +1655,7 @@ describe('PokemonService', () => {
     });
 
     const req = httpMock.expectOne('http://localhost:8080/api/pokemons');
-    req.error(new ProgressEvent('error'));
+    req.error();
   });
 });
 ```

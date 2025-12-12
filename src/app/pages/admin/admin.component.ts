@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit {
         this.stats = stats;
       },
       error: (err) => {
-        console.error('Erreur chargement stats', err);
+        console.error(err);
       }
     });
   }
@@ -51,7 +51,7 @@ export class AdminComponent implements OnInit {
       error: (err) => {
         this.error = 'Erreur lors du chargement';
         this.loading = false;
-        console.error(err);
+        console.error();
       }
     });
   }
@@ -73,7 +73,7 @@ export class AdminComponent implements OnInit {
       error: (err) => {
         this.error = 'Erreur lors du chargement';
         this.loading = false;
-        console.error(err);
+        console.error();
       }
     });
   }
@@ -99,7 +99,7 @@ export class AdminComponent implements OnInit {
       error: (err) => {
         this.error = 'Erreur lors du chargement';
         this.loading = false;
-        console.error(err);
+        console.error();
       }
     });
   }

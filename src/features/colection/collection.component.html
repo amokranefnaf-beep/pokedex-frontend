@@ -1,0 +1,232 @@
+<!--suppress ALL -->
+<section class="collection-section">
+  <div class="container">
+    <!-- En-tête -->
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">MA COLLECTION</h2>
+        @if (pokemons().length > 0) {
+          <p class="collection-stats">
+            Tu possèdes
+            <span class="highlight">{{ pokemons().length }}</span>
+            cartes sur 1,025
+          </p>
+        }
+      </div>
+
+      <!-- Filtres -->
+      <div class="filters">
+        <button
+          class="filter-btn"
+          [class.active]="!selectedType() && !selectedRarity() && !favoriteOnly()"
+          (click)="resetFilters()">
+          Tous
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="favoriteOnly()"
+          (click)="toggleFavoriteFilter()">
+          ⭐ Favoris
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedType() === PokemonType.FIRE"
+          (click)="filterByType(selectedType() === PokemonType.FIRE ? null : PokemonType.FIRE)">
+          🔥 Feu
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedType() === PokemonType.WATER"
+          (click)="filterByType(selectedType() === PokemonType.WATER ? null : PokemonType.WATER)">
+          💧 Eau
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedType() === PokemonType.GRASS"
+          (click)="filterByType(selectedType() === PokemonType.GRASS ? null : PokemonType.GRASS)">
+          🌿 Plante
+        </button>
+
+        <button
+          class="filter-btn"
+          [class.active]="selectedType() === PokemonType.ELECTRIC"
+          (click)="filterByType(selectedType() === PokemonType.ELECTRIC ? null : PokemonType.ELECTRIC)">
+          ⚡ Électrik
+        </button>
+      </div>
+    </div>
+
+    <!-- Barre de recherche -->
+    <div class="search-bar">
+      <input
+        [value]="searchTerm()"
+        class="search-input"
+        placeholder="Rechercher par nom ou numéro..."
+        type="text">
+
+      @if (searchTerm()) {
+        <button
+          class="clear-search"
+          (click)="updateSearch('')">
+          ✕
+        </button>
+      }
+    </div>
+
+    <!-- État de chargement -->
+    @if (loading()) {
+      <div class="loading-state">
+        <div class="spinner"></div>
+        <p>Chargement de ta collection...</p>
+      </div>
+    }
+
+    <!-- État d'erreur -->
+    @else if (error()) {
+      <div class="error-state">
+        <p class="error-message">{{ error() }}</p>
+        <button
+          class="retry-btn"
+          (click)="loadCollection()">
+          Réessayer
+        </button>
+      </div>
+    }
+
+    <!-- Collection vide -->
+    @else if (pokemons().length === 0) {
+      <div class="empty-state">
+        <div class="empty-icon">📦</div>
+        <h3>Ta collection est vide</h3>
+        <p>Commence par ajouter des Pokémon depuis la recherche !</p>
+        <a routerLink="/search" class="cta-btn">
+          🔍 Rechercher des Pokémon
+        </a>
+      </div>
+    }
+
+    <!-- Grille de cartes -->
+    @else {
+      <!-- Résultats filtrés vides -->
+      @if (filteredPokemons().length === 0) {
+        <div class="no-results">
+          <p>Aucun Pokémon ne correspond à tes critères</p>
+          <button
+            class="reset-btn"
+            (click)="resetFilters()">
+            Réinitialiser les filtres
+          </button>
+        </div>
+      }
+
+      @else {
+        <div class="pokemon-grid">
+          <!-- Utilisation de @for (Angular 20) avec track obligatoire -->
+          @for (pokemon of paginatedPokemons(); track pokemon.id) {
+            <div class="pokemon-card">
+              <!-- Badge de rareté -->
+              @if (pokemon.rarity === Rarity.LEGENDARY) {
+                <div class="rarity-badge legendary">
+                  ★ LÉGENDAIRE
+                </div>
+              }
+              @else if (pokemon.rarity === Rarity.RARE) {
+                <div class="rarity-badge rare">
+                  ★ RARE
+                </div>
+              }
+
+              <!-- Bouton favori -->
+              <button
+                class="favorite-btn"
+                [class.active]="pokemon.isFavorite"
+                (click)="toggleFavorite(pokemon)"
+                title="Marquer comme favori">
+                ⭐
+              </button>
+
+              <!-- Image du Pokémon -->
+              <div class="pokemon-image-container">
+                <img
+                  [src]="pokemon.officialArtwork"
+                  [alt]="pokemon.frenchName || pokemon.name"
+                  class="pokemon-image"
+                  loading="lazy">
+              </div>
+
+              <!-- Informations -->
+              <div class="pokemon-info">
+                <div class="pokemon-header">
+                  <span class="pokemon-number">#{{ pokemon.id.toString().padStart(3, '0') }}</span>
+                  <div class="pokemon-types">
+                    @for (type of pokemon.types; track type) {
+                      <span class="type-badge" [attr.data-type]="type">
+                        {{ type }}
+                      </span>
+                    }
+                  </div>
+                </div>
+
+                <h3 class="pokemon-name">
+                  {{ pokemon.frenchName || pokemon.name | uppercase }}
+                </h3>
+              </div>
+
+              <!-- Actions au survol -->
+              <div class="pokemon-actions">
+                <button
+                  class="action-btn view"
+                  title="Voir les détails">
+                  👁️
+                </button>
+                <button
+                  class="action-btn trade"
+                  title="Proposer un échange">
+                  🔄
+                </button>
+                <button
+                  class="action-btn remove"
+                  (click)="removePokemon(pokemon)"
+                  title="Retirer de la collection">
+                  🗑️
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Pagination -->
+        @if (totalPages() > 1) {
+          <div class="pagination">
+            <button
+              class="page-btn"
+              [disabled]="currentPage() === 1"
+              (click)="goToPage(currentPage() - 1)">
+              ◀
+            </button>
+
+            @for (page of [].constructor(totalPages()); track $index) {
+              <button
+                class="page-btn"
+                [class.active]="currentPage() === $index + 1"
+                (click)="goToPage($index + 1)">
+                {{ $index + 1 }}
+              </button>
+            }
+
+            <button
+              class="page-btn"
+              [disabled]="currentPage() === totalPages()"
+              (click)="goToPage(currentPage() + 1)">
+              ▶
+            </button>
+          </div>
+        }
+      }
+    }
+  </div>
+</section>

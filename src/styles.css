@@ -161,3 +161,32 @@ section {
     padding: 60px 0;
   }
 }
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variables CSS personnalisées */
+:root {
+  --poke-red: #E3350D;
+  --poke-blue: #1E90FF;
+  --poke-yellow: #FFCB05;
+  --poke-dark: #1a1a2e;
+  --poke-darker: #0f0f1a;
+}
+
+/* Classes utilitaires personnalisées */
+@layer components {
+  .pokemon-card {
+    @apply relative bg-poke-dark rounded-2xl overflow-hidden cursor-pointer
+    transition-all duration-300 hover:-translate-y-3 hover:scale-105;
+  }
+
+  .btn-primary {
+    @apply px-6 py-3 bg-poke-red hover:bg-red-600 text-white
+    font-bold rounded-xl transition-colors;
+  }
+
+  .glass {
+    @apply bg-white/5 backdrop-blur-lg border border-white/10;
+  }
+}
