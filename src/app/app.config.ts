@@ -2,8 +2,7 @@ import { ApplicationConfig } from '@angular/core';
 
 import { provideRouter } from '@angular/router';
 
-// @ts-ignore
-import { provideHttpClient } from '@angular/common/http';  // ← Ajoute cet import
+import { provideHttpClient, withFetch } from '@angular/common/http';
 
 
 
@@ -17,7 +16,7 @@ export const appConfig: ApplicationConfig = {
 
     provideRouter(routes),
 
-    provideHttpClient()  // ← Ajoute cette ligne
+    provideHttpClient(withFetch())
 
   ]
 
