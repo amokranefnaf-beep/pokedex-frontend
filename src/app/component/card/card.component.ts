@@ -75,4 +75,8 @@ export class CardComponent {
   protected toggleWishlist() {
 
   }
+
+  protected ajouterFavori(s: string) {
+
+  }
 }
