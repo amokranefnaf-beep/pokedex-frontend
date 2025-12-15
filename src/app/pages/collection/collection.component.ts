@@ -6,10 +6,7 @@ import { CardComponent } from '../../component/card/card.component';
 
 import { CardService } from '../../service/card-service';
 
-// @ts-ignore
 import { Card, PageResponse } from '../../models';
-// @ts-ignore
-export let CollectionComponent = undefined;
 
 
 @Component({
@@ -25,8 +22,7 @@ export let CollectionComponent = undefined;
   styleUrl: './collection.component.css'
 
 })
-// @ts-ignore
-class CollectionComponent implements OnInit {
+export class CollectionComponent implements OnInit {
 
   cards: Card[] = [];
 
@@ -154,5 +150,3 @@ class CollectionComponent implements OnInit {
   }
 
 }
-
-export default CollectionComponent

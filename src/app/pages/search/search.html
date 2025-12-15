@@ -59,7 +59,7 @@
 
     <!-- Aperçu du Pokémon trouvé -->
 
-    <div ngIf="foundPokemon" class="pokemon-preview">
+    <div *ngIf="foundPokemon" class="pokemon-preview">
 
       <div class="preview-card">
 
@@ -92,7 +92,7 @@
 
             <span
 
-              ngFor="let type of foundPokemon.types"
+              *ngFor="let type of foundPokemon.types"
 
               class="type-badge"
 

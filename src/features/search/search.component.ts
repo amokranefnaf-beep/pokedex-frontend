@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';  // Pour ngModel
 
-import { CardService } from '../../services/card.service';
+import { CardService } from '../../app/service/card-service';
+import {PokemonApi} from '../../app/models';
 
-import { PokemonApi, Card } from '../../models';
 
 
 
@@ -24,15 +24,11 @@ import { PokemonApi, Card } from '../../models';
 
 })
 
-export class SearchComponent {
+class SearchComponent {
 
-  // Champ de recherche
+  private cardService = inject(CardService);
 
   searchQuery: string = '';
-
-
-
-  // États
 
   loading: boolean = false;
 
@@ -40,9 +36,6 @@ export class SearchComponent {
 
   successMessage: string = '';
 
-
-
-  // Pokémon trouvé (aperçu)
 
   foundPokemon: PokemonApi | null = null;
 
@@ -52,9 +45,6 @@ export class SearchComponent {
 
   adding: boolean = false;
 
-
-
-  constructor(private cardService: CardService) {}
 
 
 
@@ -98,19 +88,20 @@ export class SearchComponent {
 
       // Recherche par ID
 
+      // @ts-ignore
       this.cardService.searchPokemonById(parseInt(query)).subscribe({
 
-        next: (pokemon) => {
+        error: (err: any) => {
 
-          this.foundPokemon = pokemon;
+          this.error = 'Pokémon non trouvé avec cet ID';
 
           this.loading = false;
 
         },
 
-        error: (err) => {
+        next: (pokemon: PokemonApi | null) => {
 
-          this.error = 'Pokémon non trouvé avec cet ID';
+          this.foundPokemon = pokemon;
 
           this.loading = false;
 
@@ -124,7 +115,7 @@ export class SearchComponent {
 
       this.cardService.searchPokemonByName(query).subscribe({
 
-        next: (pokemon) => {
+        next: (pokemon: PokemonApi | null) => {
 
           this.foundPokemon = pokemon;
 
@@ -132,7 +123,7 @@ export class SearchComponent {
 
         },
 
-        error: (err) => {
+        error: () => {
 
           this.error = 'Pokémon non trouvé avec ce nom';
 
@@ -163,7 +154,7 @@ export class SearchComponent {
 
     this.cardService.addPokemonToCollection(this.foundPokemon.pokeApiId).subscribe({
 
-      next: (card) => {
+      next: (card: { name: any; }) => {
 
         this.successMessage = `${card.name} a été ajouté à ta collection ! 🎉`;
 
@@ -177,7 +168,7 @@ export class SearchComponent {
 
       },
 
-      error: (err) => {
+      error: (err: { status: number; }) => {
 
         // Gérer le cas "déjà dans la collection"
 
@@ -230,4 +221,6 @@ export class SearchComponent {
   }
 
 }
+
+export default SearchComponent
 

@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';  // Pour ngModel
 
-// @ts-ignore
-import { CardService } from '../../services/card.service';
+import { CardService } from '../../service/card-service';
 
 import { PokemonApi, Card } from '../../models';
 
@@ -19,13 +18,15 @@ import { PokemonApi, Card } from '../../models';
 
   imports: [CommonModule, FormsModule],
 
-  templateUrl: './search.component.html',
+  templateUrl: './search.html',
 
-  styleUrl: './search.component.css'
+  styleUrl: './search.css'
 
 })
 
 class SearchComponent {
+
+  private cardService = inject(CardService);
 
   // Champ de recherche
 
@@ -52,10 +53,6 @@ class SearchComponent {
   // État d'ajout
 
   adding: boolean = false;
-
-
-
-  constructor(private cardService: CardService) {}
 
 
 

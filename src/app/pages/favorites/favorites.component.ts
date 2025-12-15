@@ -4,11 +4,10 @@ import { CommonModule } from '@angular/common';
 
 import { RouterLink } from '@angular/router';
 
-import { CardService } from '../../../services/card.service';
-
-import { CardComponent } from '../../components/card/card.component';
 
 import { Card } from '../../models';
+import {CardComponent} from '../../component/card/card.component';
+import {CardService} from '../../service/card-service';
 
 
 

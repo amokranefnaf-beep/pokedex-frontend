@@ -29,10 +29,10 @@ export const routes: Routes = [
   {
 
     path: 'search',
-    // @ts-ignore
-    loadComponent: () => import('./pages/search/search.component')
 
-      .then(m => m.SearchComponent)
+    loadComponent: () => import('./pages/search/search')
+
+      .then(m => m.default)
 
   },
 
