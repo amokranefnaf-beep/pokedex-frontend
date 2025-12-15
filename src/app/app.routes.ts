@@ -29,7 +29,6 @@ export const routes: Routes = [
   {
 
     path: 'search',
-    // @ts-ignore
     loadComponent: () => import('./pages/search/search.component')
 
       .then(m => m.SearchComponent)
@@ -39,7 +38,6 @@ export const routes: Routes = [
   {
 
     path: 'favorites',
-    // @ts-ignore
     loadComponent: () => import('./pages/favorites/favorites.component')
 
       .then(m => m.FavoritesComponent)

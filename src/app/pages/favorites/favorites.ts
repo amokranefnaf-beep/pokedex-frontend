@@ -22,7 +22,7 @@ import { Card } from '../../models';
 
   imports: [CommonModule, RouterLink, CardComponent],
 
-  templateUrl: <`./favorites.component.html`,
+  templateUrl: './favorites.component.html',
 
   styleUrl: './favorites.component.css'
 
