@@ -856,7 +856,7 @@ export class CollectionComponent implements OnInit {
         this.loading.set(false);
       },
       error: (err) => {
-        console.error(err);
+        console.error();
         this.error.set('Impossible de charger la collection. Veuillez réessayer.');
         this.loading.set(false);
       }
@@ -954,7 +954,7 @@ export class CollectionComponent implements OnInit {
           )
         );
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error()
     });
   }
 
@@ -969,7 +969,7 @@ export class CollectionComponent implements OnInit {
             pokemons.filter(p => p.id !== pokemon.id)
           );
         },
-        error: (err) => console.error(err)
+        error: (err) => console.error()
       });
     }
   }

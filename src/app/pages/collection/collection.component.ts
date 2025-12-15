@@ -8,7 +8,8 @@ import { CardService } from '../../service/card-service';
 
 // @ts-ignore
 import { Card, PageResponse } from '../../models';
-
+// @ts-ignore
+export let CollectionComponent = undefined;
 
 
 @Component({
@@ -24,7 +25,7 @@ import { Card, PageResponse } from '../../models';
   styleUrl: './collection.component.css'
 
 })
-
+// @ts-ignore
 class CollectionComponent implements OnInit {
 
   cards: Card[] = [];
@@ -112,7 +113,7 @@ class CollectionComponent implements OnInit {
 
       },
 
-      error: (err: Error) => console.error(err)
+      error: (err: Error) => console.error()
 
     });
 
@@ -134,7 +135,7 @@ class CollectionComponent implements OnInit {
 
         },
 
-        error: (err: Error) => console.error(err)
+        error: (err: Error) => console.error()
 
       });
 

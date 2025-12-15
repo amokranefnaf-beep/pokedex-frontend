@@ -143,7 +143,13 @@ export class CardService {
 
   }
 
+// Récupérer les favoris
 
+  getFavorites(): Observable<Card[]> {
+
+    return this.http.get<Card[]>(`${this.apiUrl}/cards/favorites`);
+
+  }
 
   /**
 

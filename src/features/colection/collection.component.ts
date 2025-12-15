@@ -71,7 +71,7 @@ class CollectionComponent implements OnInit {
     // @ts-ignore
     this.collectionService.getUserCollection().subscribe({
       error: (err: any) => {
-        console.error(err);
+        console.error();
         this.error.set('Impossible de charger la collection. Veuillez réessayer.');
         this.loading.set(false);
       },
@@ -175,7 +175,7 @@ class CollectionComponent implements OnInit {
           )
         );
       },
-      error: (err: any) => console.error(err)
+      error: (err: any) => console.error()
     });
   }
 

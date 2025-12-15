@@ -1,3 +1,4 @@
+// @ts-ignore
 /**
 
  * Pokémon venant directement de PokéAPI (avant ajout à la collection)
@@ -5,23 +6,24 @@
  */
 
 export interface PokemonApi {
+  attack: number;
 
-  id: number;
-
-  name: string;
-
-  imageUrl: string;
-
-  types: string[];
+  defense: number;
 
   generation: number;
 
   hp: number;
 
-  attack: number;
+  id: number;
 
-  defense: number;
+  imageUrl: string;
+
+  name: string;
+
+  pokeApiId:any;
 
   speed: number;
+
+  types: string[];
 
 }

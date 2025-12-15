@@ -1,0 +1,183 @@
+<div class="search-page">
+
+  <div class="container">
+
+
+
+    <!-- Titre -->
+
+    <h1 class="page-title">
+
+      <span class="gradient-text">Rechercher un Pokémon</span>
+
+    </h1>
+
+    <p class="page-subtitle">Trouve et ajoute des Pokémon à ta collection</p>
+
+
+
+    <!-- Barre de recherche -->
+
+    <div class="search-box">
+
+      <div class="search-input-wrapper">
+
+        <span class="search-icon">🔍</span>
+
+
+      </div>
+
+      <button class="btn-primary">
+
+        {{ !loading ? '🔍 Rechercher' : '⏳ Recherche...' }}
+
+      </button>
+
+      <button class="btn-secondary">
+
+        🎲 Aléatoire
+
+      </button>
+
+    </div>
+
+
+
+    <!-- Messages -->
+
+    <div ngIf="error" class="message error-message">
+
+      ❌ {{ error }}
+
+    </div>
+
+    <div ngIf="successMessage" class="message success-message">
+
+      ✅ {{ successMessage }}
+
+    </div>
+
+    <!-- Aperçu du Pokémon trouvé -->
+
+    <div ngIf="foundPokemon" class="pokemon-preview">
+
+      <div class="preview-card">
+
+
+
+        <!-- Image -->
+
+        <div class="preview-image-wrapper">
+
+          <img [alt]="foundPokemon.name"
+               class="preview-image float"/>
+
+        </div>
+
+
+
+        <!-- Infos -->
+
+        <div class="preview-info">
+
+          <span class="preview-number">#{{ foundPokemon.pokeApiId }}</span>
+
+          <h2 class="preview-name">{{ foundPokemon.name }}</h2>
+
+
+
+          <!-- Types -->
+
+          <div class="preview-types">
+
+            <span
+
+              ngFor="let type of foundPokemon.types"
+
+              class="type-badge"
+
+              [ngClass]="'type-' + type.toLowerCase()">
+
+              {{ type }}
+
+            </span>
+
+          </div>
+
+
+
+          <!-- Stats -->
+
+          <div class="preview-stats">
+
+            <div class="stat-row">
+
+              <span class="stat-label">❤️ HP</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill hp"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.hp }}</span>
+
+            </div>
+
+            <div class="stat-row">
+
+              <span class="stat-label">⚔️ ATK</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill attack"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.attack }}</span>
+
+
+              <span class="stat-label">🛡️ DEF</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill defense"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.defense }}</span>
+
+
+              <span class="stat-label">💨 SPD</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill speed"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.speed }}</span>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Bouton ajouter -->
+
+
+          {{ adding ? '⏳ Ajout...' : '➕ Ajouter à ma collection' }}
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>

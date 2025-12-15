@@ -1,0 +1,81 @@
+<div class="favorites-page">
+
+  <div class="container">
+
+
+
+    <!-- Titre -->
+
+    <h1 class="page-title">❤️ Mes Favoris</h1>
+
+    <p class="page-subtitle">{{ favorites.length }} Pokémon dans tes favoris</p>
+
+
+
+    <!-- Chargement -->
+
+    <div ngIf="loading" class="loading">
+
+      <span class="loading-spinner">⏳</span>
+
+      <p>Chargement de tes favoris...</p>
+
+    </div>
+
+
+
+    <!-- Erreur -->
+
+    <div ngIf="error" class="error-message">
+
+      ❌ {{ error }}
+
+    </div>
+
+
+
+    <!-- Liste des favoris -->
+
+    <div ngIf="!loading && favorites.length > 0" class="cards-grid">
+
+      <app-card
+
+        (cardDelete)="onCardDelete(event)"
+
+        (favoriteToggle)="onFavoriteToggle(event)"
+
+        [card]="card"
+
+        ngFor="let card of favorites">
+
+      </app-card>
+
+    </div>
+
+
+
+    <!-- Aucun favori -->
+
+    <div ngIf="!loading && favorites.length === 0" class="empty-state">
+
+      <span class="empty-icon">💔</span>
+
+      <h2>Aucun favori</h2>
+
+      <p>Tu n'as pas encore de Pokémon favoris.</p>
+
+      <p>Clique sur ❤️ sur une carte pour l'ajouter !</p>
+
+      <a routerLink="/collection" class="btn-primary">
+
+        📚 Voir ma collection
+
+      </a>
+
+    </div>
+
+
+
+  </div>
+
+</div>

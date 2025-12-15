@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit {
         this.stats = stats;
       },
       error: (err) => {
-        console.error(err);
+        console.error();
       }
     });
   }

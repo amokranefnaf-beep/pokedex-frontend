@@ -2,6 +2,8 @@ import { Routes } from '@angular/router';
 
 
 
+
+// @ts-ignore
 export const routes: Routes = [
 
   {
@@ -14,24 +16,33 @@ export const routes: Routes = [
 
   },
 
-
   {
 
     path: 'collection',
 
     loadComponent: () => import('./pages/collection/collection.component')
 
-      .then(m => m.default)
+      .then(m => m.CollectionComponent)
 
   },
 
   {
 
-    path: 'admin',
+    path: 'search',
+    // @ts-ignore
+    loadComponent: () => import('./pages/search/search.component')
 
-    loadComponent: () => import('./pages/admin/admin.component')
+      .then(m => m.SearchComponent)
 
-      .then(m => m.AdminComponent)
+  },
+
+  {
+
+    path: 'favorites',
+    // @ts-ignore
+    loadComponent: () => import('./pages/favorites/favorites.component')
+
+      .then(m => m.FavoritesComponent)
 
   },
 
