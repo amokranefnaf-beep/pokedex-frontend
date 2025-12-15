@@ -14,7 +14,7 @@
 
     <!-- Chargement -->
 
-    <div ngIf="loading" class="loading">
+    <div *ngIf="loading" class="loading">
 
       <span class="loading-spinner">⏳</span>
 
@@ -26,7 +26,7 @@
 
     <!-- Erreur -->
 
-    <div ngIf="error" class="error-message">
+    <div *ngIf="error" class="error-message">
 
       ❌ {{ error }}
 
@@ -36,17 +36,17 @@
 
     <!-- Liste des favoris -->
 
-    <div ngIf="!loading && favorites.length > 0" class="cards-grid">
+    <div *ngIf="!loading && favorites.length > 0" class="cards-grid">
 
       <app-card
 
-        (cardDelete)="onCardDelete(event)"
-
-        (favoriteToggle)="onFavoriteToggle(event)"
+        *ngFor="let card of favorites"
 
         [card]="card"
 
-        ngFor="let card of favorites">
+        (favoriteToggle)="onFavoriteToggle($event)"
+
+        (cardDelete)="onCardDelete($event)">
 
       </app-card>
 
@@ -56,7 +56,7 @@
 
     <!-- Aucun favori -->
 
-    <div ngIf="!loading && favorites.length === 0" class="empty-state">
+    <div *ngIf="!loading && favorites.length === 0" class="empty-state">
 
       <span class="empty-icon">💔</span>
 

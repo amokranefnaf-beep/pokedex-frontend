@@ -4,10 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { RouterLink } from '@angular/router';
 
-// @ts-ignore
-import { CardService } from '../../services/card.service';
+import { CardService } from '../../../services/card.service';
 
-// @ts-ignore
 import { CardComponent } from '../../components/card/card.component';
 
 import { Card } from '../../models';
@@ -22,7 +20,7 @@ import { Card } from '../../models';
 
   imports: [CommonModule, RouterLink, CardComponent],
 
-  templateUrl: <`./favorites.component.html`,
+  templateUrl: './favorites.component.html',
 
   styleUrl: './favorites.component.css'
 
@@ -56,17 +54,17 @@ export class FavoritesComponent implements OnInit {
 
     this.cardService.getFavorites().subscribe({
 
-      next: (cards: Card[]) => {
+      error: (err: any) => {
 
-        this.favorites = cards;
+        this.error = 'Erreur lors du chargement des favoris';
 
         this.loading = false;
 
       },
 
-      error: () => {
+      next: (cards: Card[]) => {
 
-        this.error = 'Erreur lors du chargement des favoris';
+        this.favorites = cards;
 
         this.loading = false;
 

@@ -1,0 +1,216 @@
+<div class="search-page">
+
+  <div class="container">
+
+
+
+    <!-- Titre -->
+
+    <h1 class="page-title">
+
+      <span class="gradient-text">Rechercher un Pokémon</span>
+
+    </h1>
+
+    <p class="page-subtitle">Trouve et ajoute des Pokémon à ta collection</p>
+
+
+
+    <!-- Barre de recherche -->
+
+    <div class="search-box">
+
+      <div class="search-input-wrapper">
+
+        <span class="search-icon">🔍</span>
+
+        <input
+
+          type="text"
+
+          [(ngModel)]="searchQuery"
+
+          (keypress)="onKeyPress($event)"
+
+          placeholder="Nom ou numéro (ex: pikachu ou 25)"
+
+          class="search-input"
+
+        />
+
+      </div>
+
+      <button class="btn-primary" (click)="search()" [disabled]="loading">
+
+        {{ loading ? '⏳ Recherche...' : '🔍 Rechercher' }}
+
+      </button>
+
+      <button class="btn-secondary" (click)="searchRandom()" [disabled]="loading">
+
+        🎲 Aléatoire
+
+      </button>
+
+    </div>
+
+
+
+    <!-- Messages -->
+
+    <div *ngIf="error" class="message error-message">
+
+      ❌ {{ error }}
+
+    </div>
+
+    <div *ngIf="successMessage" class="message success-message">
+
+      ✅ {{ successMessage }}
+
+    </div>
+    <!-- Aperçu du Pokémon trouvé -->
+
+    <div *ngIf="foundPokemon" class="pokemon-preview">
+
+      <div class="preview-card">
+
+
+
+        <!-- Image -->
+
+        <div class="preview-image-wrapper">
+
+          <img
+
+            [src]="foundPokemon.imageUrl"
+
+            [alt]="foundPokemon.name"
+
+            class="preview-image float"
+
+          />
+
+        </div>
+
+
+
+        <!-- Infos -->
+
+        <div class="preview-info">
+
+          <span class="preview-number">#{{ foundPokemon.pokeApiId }}</span>
+
+          <h2 class="preview-name">{{ foundPokemon.name }}</h2>
+
+
+
+          <!-- Types -->
+
+          <div class="preview-types">
+
+            <span
+
+              *ngFor="let type of foundPokemon.types"
+
+              class="type-badge"
+
+              [ngClass]="'type-' + type.toLowerCase()">
+
+              {{ type }}
+
+            </span>
+
+          </div>
+
+
+
+          <!-- Stats -->
+
+          <div class="preview-stats">
+
+            <div class="stat-row">
+
+              <span class="stat-label">❤️ HP</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill hp" [style.width.%]="foundPokemon.hp / 2.55"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.hp }}</span>
+
+            </div>
+
+            <div class="stat-row">
+
+              <span class="stat-label">⚔️ ATK</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill attack" [style.width.%]="foundPokemon.attack / 2.55"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.attack }}</span>
+
+            </div>
+
+            <div class="stat-row">
+
+              <span class="stat-label">🛡️ DEF</span>
+              <div class="stat-bar">
+
+                <div class="stat-fill defense" [style.width.%]="foundPokemon.defense / 2.55"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.defense }}</span>
+
+            </div>
+
+            <div class="stat-row">
+
+              <span class="stat-label">💨 SPD</span>
+
+              <div class="stat-bar">
+
+                <div class="stat-fill speed" [style.width.%]="foundPokemon.speed / 2.55"></div>
+
+              </div>
+
+              <span class="stat-value">{{ foundPokemon.speed }}</span>
+
+            </div>
+
+          </div>
+
+
+
+          <!-- Bouton ajouter -->
+
+          <button
+
+            class="btn-primary add-btn"
+
+            (click)="addToCollection()"
+
+            [disabled]="adding">
+
+            {{ adding ? '⏳ Ajout...' : '➕ Ajouter à ma collection' }}
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+  </div>
+
+</div>
+
