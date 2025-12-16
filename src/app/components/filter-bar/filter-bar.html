@@ -1,0 +1,103 @@
+<div class="filter-bar">
+
+
+
+  <!-- Recherche -->
+
+  <div class="filter-group search-group">
+
+    <span class="filter-icon">🔍</span>
+
+    <input
+
+      type="text"
+
+      [(ngModel)]="searchTerm"
+
+      (ngModelChange)="onFilterChange()"
+
+      placeholder="Rechercher..."
+
+      class="filter-input"
+
+    />
+
+  </div>
+
+
+
+  <!-- Filtre par type -->
+
+  <div class="filter-group">
+
+    <label class="filter-label">Type</label>
+
+    <select
+
+      [(ngModel)]="selectedType"
+
+      (ngModelChange)="onFilterChange()"
+
+      class="filter-select">
+
+      <option value="">Tous les types</option>
+
+      <option *ngFor="let type of pokemonTypes" [value]="type">
+
+        {{ type | titlecase }}
+
+      </option>
+
+    </select>
+
+  </div>
+
+
+
+  <!-- Tri -->
+
+  <div class="filter-group">
+
+    <label class="filter-label">Trier par</label>
+
+    <select
+
+      [(ngModel)]="sortBy"
+
+      (ngModelChange)="onFilterChange()"
+
+      class="filter-select">
+
+      <option *ngFor="let option of sortOptions" [value]="option.value">
+
+        {{ option.label }}
+
+      </option>
+
+    </select>
+
+  </div>
+
+
+
+  <!-- Bouton ordre -->
+
+  <button class="sort-order-btn" (click)="toggleSortOrder()">
+
+    {{ sortOrder === 'asc' ? '⬆️' : '⬇️' }}
+
+  </button>
+
+
+
+  <!-- Bouton reset -->
+
+  <button class="reset-btn" (click)="resetFilters()">
+
+    🔄 Reset
+
+  </button>
+
+
+
+</div>

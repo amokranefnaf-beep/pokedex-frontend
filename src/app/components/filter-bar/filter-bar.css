@@ -1,0 +1,205 @@
+.filter-bar {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 1rem;
+
+  padding: 1.5rem;
+
+  background: var(--poke-dark);
+
+  border-radius: var(--radius-lg);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  margin-bottom: 2rem;
+
+  align-items: flex-end;
+
+}
+
+
+
+.filter-group {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+}
+
+
+
+.search-group {
+
+  flex: 1;
+
+  min-width: 200px;
+
+  position: relative;
+
+  flex-direction: row;
+
+  align-items: center;
+
+}
+
+
+
+.filter-icon {
+
+  position: absolute;
+
+  left: 1rem;
+
+  font-size: 1rem;
+
+}
+
+
+
+.filter-label {
+
+  font-size: 0.75rem;
+
+  color: var(--text-gray-400);
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.5px;
+
+}
+
+
+
+.filter-input,
+
+.filter-select {
+
+  padding: 0.75rem 1rem;
+
+  font-size: 0.9rem;
+
+  font-family: var(--font-body);
+
+  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: var(--radius-md);
+
+  color: white;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.filter-input {
+
+  width: 100%;
+
+  padding-left: 2.5rem;
+
+}
+
+
+
+.filter-input:focus,
+
+.filter-select:focus {
+
+  outline: none;
+
+  border-color: var(--poke-blue);
+
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
+
+}
+
+
+
+.filter-select {
+
+  min-width: 150px;
+
+  cursor: pointer;
+
+}
+
+
+
+.filter-select option {
+
+  background: var(--poke-dark);
+
+  color: white;
+
+}
+
+
+
+.sort-order-btn {
+
+  padding: 0.75rem 1rem;
+
+  font-size: 1.25rem;
+
+  background: rgba(255, 255, 255, 0.1);
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  border-radius: var(--radius-md);
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.sort-order-btn:hover {
+
+  background: rgba(255, 255, 255, 0.2);
+
+}
+
+
+
+.reset-btn {
+
+  padding: 0.75rem 1rem;
+
+  font-size: 0.9rem;
+
+  font-family: var(--font-body);
+
+  background: transparent;
+
+  border: 1px solid var(--poke-red);
+
+  border-radius: var(--radius-md);
+
+  color: var(--poke-red);
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+}
+
+
+
+.reset-btn:hover {
+
+  background: var(--poke-red);
+
+  color: white;
+
+}

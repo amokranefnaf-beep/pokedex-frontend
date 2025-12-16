@@ -1,74 +1,93 @@
-<section class="collection">
-  <div class="collection__container">
-    <!-- Section Header -->
-    <div class="collection__header">
-      <div>
-        <h2 class="section-title">MA COLLECTION</h2>
-        <p class="collection__subtitle">
-          Tu possèdes <span class="count-highlight">{{ totalElements }}</span> cartes sur <span class="count-total">1,025</span>
-        </p>
-      </div>
+<div class="collection-page">
 
-      <!-- Filters -->
-      <div class="collection__filters">
-        <button class="filter-btn filter-btn--active">Tous</button>
-        <button class="filter-btn">⭐ Favoris</button>
-        <button class="filter-btn">🔥 Feu</button>
-        <button class="filter-btn">💧 Eau</button>
-        <button class="filter-btn">🌿 Plante</button>
-        <button class="filter-btn">⚡ Électrik</button>
-      </div>
-    </div>
+  <div class="container">
 
-    <!-- Loading -->
+
+
+    <!-- Titre -->
+
+    <h1 class="page-title">
+
+      <span class="gradient-text">Ma Collection</span>
+
+    </h1>
+
+    <p class="page-subtitle">
+
+      {{ filteredCards.length }} / {{ allCards.length }} Pokémon
+
+    </p>
+
+
+
+    <!-- Barre de filtres -->
+
+    <app-filter-bar
+
+      (filtersChange)="onFiltersChange($event)">
+
+    </app-filter-bar>
+
+
+
+    <!-- Chargement -->
+
     <div *ngIf="loading" class="loading">
-      <div class="loading__spinner"></div>
-      <p>⏳ Chargement de ta collection...</p>
+
+      <span class="loading-spinner">⏳</span>
+
+      <p>Chargement de ta collection...</p>
+
     </div>
 
-    <!-- Error -->
-    <div *ngIf="error" class="error">
-      <p>❌ {{ error }}</p>
-      <button (click)="loadCards()" class="btn-retry">Réessayer</button>
+
+
+    <!-- Erreur -->
+
+    <div *ngIf="error" class="error-message">
+
+      ❌ {{ error }}
+
     </div>
 
-    <!-- Cards Grid -->
-    <div *ngIf="!loading && !error" class="cards-grid">
+
+
+    <!-- Grille de cartes -->
+
+    <div *ngIf="!loading && filteredCards.length > 0" class="cards-grid">
+
       <app-card
-        *ngFor="let card of cards"
+
+        *ngFor="let card of filteredCards"
+
         [card]="card"
+
         (favoriteToggle)="onFavoriteToggle($event)"
+
         (cardDelete)="onCardDelete($event)">
+
       </app-card>
+
     </div>
 
-    <!-- Empty state -->
-    <div *ngIf="!loading && cards.length === 0" class="empty">
-      <div class="empty__content">
-        <span class="empty__icon">🎴</span>
-        <h3>Ta collection est vide !</h3>
-        <p>Ajoute des Pokémon depuis la page Recherche.</p>
-        <a href="/search" class="btn-primary">🔍 Rechercher des Pokémon</a>
-      </div>
+
+
+    <!-- Aucun résultat -->
+
+    <div *ngIf="!loading && filteredCards.length === 0" class="empty-state">
+
+      <span class="empty-icon">🔍</span>
+
+      <h2>Aucun Pokémon trouvé</h2>
+
+      <p *ngIf="allCards.length > 0">Essaie de modifier tes filtres</p>
+
+      <p *ngIf="allCards.length === 0">Ta collection est vide. Ajoute des Pokémon !</p>
+
     </div>
 
-    <!-- Pagination -->
-    <div *ngIf="totalPages > 1" class="pagination">
-      <button class="pagination__btn" [disabled]="currentPage === 0" (click)="goToPage(currentPage - 1)">
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-      </button>
-      <button class="pagination__number pagination__number--active">{{ currentPage + 1 }}</button>
-      <button class="pagination__number" *ngIf="totalPages > 1">2</button>
-      <button class="pagination__number" *ngIf="totalPages > 2">3</button>
-      <span *ngIf="totalPages > 4">...</span>
-      <button class="pagination__number" *ngIf="totalPages > 3">{{ totalPages }}</button>
-      <button class="pagination__btn" [disabled]="currentPage >= totalPages - 1" (click)="goToPage(currentPage + 1)">
-        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-        </svg>
-      </button>
-    </div>
+
+
   </div>
-</section>
+
+</div>

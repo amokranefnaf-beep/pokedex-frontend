@@ -107,7 +107,13 @@ export class CardService {
 
   }
 
+// Récupérer TOUTES les cartes (sans pagination)
 
+  getAllCards(): Observable<Card[]> {
+
+    return this.http.get<Card[]>(`${this.apiUrl}/cards/all`);
+
+  }
 
   // ===== POKEAPI (recherche de nouveaux Pokémon) =====
 
@@ -160,6 +166,8 @@ export class CardService {
   addPokemonToCollection(pokeApiId: number): Observable<Card> {
 
     return this.http.post<Card>(`${this.apiUrl}/pokeapi/pokemon/${pokeApiId}/add`, {});
+
+
 
   }
 

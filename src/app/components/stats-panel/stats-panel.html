@@ -1,0 +1,125 @@
+<div class="stats-panel" *ngIf="cards.length > 0">
+
+  <h3 class="stats-title">📊 Statistiques</h3>
+
+
+
+  <div class="stats-grid">
+
+
+
+    <!-- Total cartes -->
+
+    <div class="stat-card">
+
+      <span class="stat-icon">🎴</span>
+
+      <span class="stat-number">{{ totalCards }}</span>
+
+      <span class="stat-label">Total</span>
+
+    </div>
+
+
+
+    <!-- Favoris -->
+
+    <div class="stat-card">
+
+      <span class="stat-icon">❤️</span>
+
+      <span class="stat-number">{{ totalFavorites }}</span>
+
+      <span class="stat-label">Favoris</span>
+
+    </div>
+
+
+
+    <!-- HP moyen -->
+
+    <div class="stat-card">
+
+      <span class="stat-icon">💚</span>
+
+      <span class="stat-number">{{ avgHp }}</span>
+
+      <span class="stat-label">HP moy.</span>
+
+    </div>
+
+
+
+    <!-- Attaque moyenne -->
+
+    <div class="stat-card">
+
+      <span class="stat-icon">⚔️</span>
+
+      <span class="stat-number">{{ avgAttack }}</span>
+
+      <span class="stat-label">ATK moy.</span>
+
+    </div>
+
+
+
+  </div>
+
+
+
+  <!-- Pokémon le plus fort -->
+
+  <div class="strongest-pokemon" *ngIf="strongestPokemon">
+
+    <span class="crown">👑</span>
+
+    <span class="strongest-label">Le plus fort :</span>
+
+    <img [src]="strongestPokemon.imageUrl" [alt]="strongestPokemon.name" class="strongest-img" />
+
+    <span class="strongest-name">{{ strongestPokemon.name }}</span>
+
+  </div>
+
+
+
+  <!-- Top types -->
+
+  <div class="type-distribution">
+
+    <h4>Top Types</h4>
+
+    <div class="type-bars">
+
+      <div *ngFor="let item of typeDistribution" class="type-bar-row">
+
+        <span class="type-badge" [ngClass]="'type-' + item.type.toLowerCase()">
+
+          {{ item.type }}
+
+        </span>
+
+        <div class="type-bar-bg">
+
+          <div
+
+            class="type-bar-fill"
+
+            [style.width.%]="(item.count / totalCards) * 100">
+
+          </div>
+
+        </div>
+
+        <span class="type-count">{{ item.count }}</span>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+</div>

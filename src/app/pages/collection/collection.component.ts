@@ -2,12 +2,24 @@ import { Component, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import { CardComponent } from '../../component/card/card.component';
+// @ts-ignore
+import { CardService } from '../../services/card.service';
 
-import { CardService } from '../../service/card-service';
+// @ts-ignore
+import { CardComponent } from '../../components/card/card.component';
 
-import { Card, PageResponse } from '../../models';
+// @ts-ignore
+import { FilterBarComponent, FilterOptions } from '../../components/filter-bar/filter-bar.component';
 
+import { Card } from '../../models';
+
+// @ts-ignore
+import { StatsPanelComponent } from '../../components/stats-panel/stats-panel.component';
+
+// Et ajoute dans imports:
+
+imports: // @ts-ignore
+  [CommonModule, CardComponent, FilterBarComponent, StatsPanelComponent],
 
 @Component({
 
@@ -15,34 +27,50 @@ import { Card, PageResponse } from '../../models';
 
   standalone: true,
 
-  imports: [CommonModule, CardComponent],
+  imports: [CommonModule, CardComponent, FilterBarComponent],
 
   templateUrl: './collection.component.html',
 
   styleUrl: './collection.component.css'
 
 })
+
+// @ts-ignore
 export class CollectionComponent implements OnInit {
 
-  cards: Card[] = [];
+  // Toutes les cartes (non filtrées)
 
-  loading = true;
+  allCards: Card[] = [];
 
-  error: string | null = null;
+  // Cartes filtrées à afficher
 
-
-
-  // Pagination
-
-  currentPage = 0;
-
-  totalPages = 0;
-
-  totalElements = 0;
+  filteredCards: Card[] = [];
 
 
 
-  constructor(private cardService: CardService) { }
+  loading: boolean = true;
+
+  error: string = '';
+
+
+
+  // Filtres actuels
+
+  currentFilters: FilterOptions = {
+
+    searchTerm: '',
+
+    selectedType: '',
+
+    sortBy: 'pokeApiId',
+
+    sortOrder: 'asc'
+
+  };
+
+
+
+  constructor(private cardService: CardService) {}
 
 
 
@@ -58,30 +86,141 @@ export class CollectionComponent implements OnInit {
 
     this.loading = true;
 
-    this.error = null;
+    // Charger TOUTES les cartes (pas de pagination ici)
 
+    this.cardService.getAllCards().subscribe({
 
+      next: (cards: Card[]) => {
 
-    this.cardService.getCards(this.currentPage, 20).subscribe({
+        this.allCards = cards;
 
-      next: (response: PageResponse<Card>) => {
-        this.cards = response.content;
-
-        this.totalPages = response.totalPages;
-
-        this.totalElements = response.totalElements;
+        this.applyFilters();
 
         this.loading = false;
 
       },
 
-      error: (err: Error) => {
+      error: () => {
 
-        this.error = 'Erreur lors du chargement des cartes';
+        this.error = 'Erreur lors du chargement';
 
         this.loading = false;
 
-        console.error();
+      }
+
+    });
+
+  }
+
+  // Appelé quand les filtres changent
+
+  onFiltersChange(filters: FilterOptions): void {
+
+    this.currentFilters = filters;
+
+    this.applyFilters();
+
+  }
+
+
+
+  // Appliquer les filtres et le tri
+
+  applyFilters(): void {
+
+    let result = [...this.allCards];
+
+
+
+    // Filtre par recherche
+
+    if (this.currentFilters.searchTerm) {
+
+      const term = this.currentFilters.searchTerm.toLowerCase();
+
+      result = result.filter(card =>
+
+        card.name.toLowerCase().includes(term)
+
+      );
+
+    }
+
+
+
+    // Filtre par type
+
+    if (this.currentFilters.selectedType) {
+
+      const type = this.currentFilters.selectedType.toLowerCase();
+
+      result = result.filter(card =>
+
+        card.types.some(t => t.toLowerCase() === type)
+
+      );
+
+    }
+
+
+
+    // Tri
+
+    result.sort((a, b) => {
+
+      let valueA: any = a[this.currentFilters.sortBy as keyof Card];
+
+      let valueB: any = b[this.currentFilters.sortBy as keyof Card];
+
+
+
+      // Tri alphabétique pour les strings
+
+      if (typeof valueA === 'string') {
+
+        valueA = valueA.toLowerCase();
+
+        valueB = valueB.toLowerCase();
+
+      }
+
+
+
+      if (valueA < valueB) return this.currentFilters.sortOrder === 'asc' ? -1 : 1;
+
+      if (valueA > valueB) return this.currentFilters.sortOrder === 'asc' ? 1 : -1;
+
+      return 0;
+
+    });
+
+
+
+    this.filteredCards = result;
+
+  }
+
+
+
+  // Toggle favori
+
+  onFavoriteToggle(cardId: number): void {
+
+    this.cardService.toggleFavorite(cardId).subscribe({
+
+      next: (updated: Card) => {
+
+        // Mettre à jour dans allCards
+
+        const index = this.allCards.findIndex(c => c.id === cardId);
+
+        if (index !== -1) {
+
+          this.allCards[index] = updated;
+
+        }
+
+        this.applyFilters();
 
       }
 
@@ -91,61 +230,25 @@ export class CollectionComponent implements OnInit {
 
 
 
-  onFavoriteToggle(cardId: number): void {
-
-    this.cardService.toggleFavorite(cardId).subscribe({
-
-      next: (updatedCard: Card) => {
-
-        // Met à jour la carte dans la liste
-
-        const index = this.cards.findIndex(c => c.id === cardId);
-
-        if (index !== -1) {
-
-          this.cards[index] = updatedCard;
-
-        }
-
-      },
-
-      error: (err: Error) => console.error()
-
-    });
-
-  }
-
-
+  // Supprimer carte
 
   onCardDelete(cardId: number): void {
 
-    if (confirm('Supprimer cette carte de la collection ?')) {
+    if (confirm('Supprimer ce Pokémon ?')) {
 
       this.cardService.deleteCard(cardId).subscribe({
 
         next: () => {
 
-          this.cards = this.cards.filter(c => c.id !== cardId);
+          this.allCards = this.allCards.filter(c => c.id !== cardId);
 
-          this.totalElements--;
+          this.applyFilters();
 
-        },
-
-        error: (err: Error) => console.error()
+        }
 
       });
 
     }
-
-  }
-
-
-
-  goToPage(page: number): void {
-
-    this.currentPage = page;
-
-    this.loadCards();
 
   }
 
