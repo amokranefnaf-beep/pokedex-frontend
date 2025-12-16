@@ -24,16 +24,23 @@
 
         <span class="search-icon">🔍</span>
 
+        <input
+          type="text"
+          [(ngModel)]="searchQuery"
+          (keypress)="onKeyPress($event)"
+          placeholder="Nom ou numéro (ex: pikachu ou 25)"
+          class="search-input"
+        />
 
       </div>
 
-      <button class="btn-primary">
+      <button class="btn-primary" (click)="search()" [disabled]="loading">
 
         {{ !loading ? '🔍 Rechercher' : '⏳ Recherche...' }}
 
       </button>
 
-      <button class="btn-secondary">
+      <button class="btn-secondary" (click)="searchRandom()" [disabled]="loading">
 
         🎲 Aléatoire
 
@@ -45,34 +52,40 @@
 
     <!-- Messages -->
 
-    <div ngIf="error" class="message error-message">
+    @if (error) {
+      <div class="message error-message">
 
-      ❌ {{ error }}
+        ❌ {{ error }}
 
-    </div>
+      </div>
+    }
 
-    <div ngIf="successMessage" class="message success-message">
+    @if (successMessage) {
+      <div class="message success-message">
 
-      ✅ {{ successMessage }}
+        ✅ {{ successMessage }}
 
-    </div>
+      </div>
+    }
 
     <!-- Aperçu du Pokémon trouvé -->
 
-    <div *ngIf="foundPokemon" class="pokemon-preview">
+    @if (foundPokemon) {
+      <div class="pokemon-preview">
 
-      <div class="preview-card">
+        <div class="preview-card">
 
 
 
-        <!-- Image -->
+          <!-- Image -->
 
-        <div class="preview-image-wrapper">
+          <div class="preview-image-wrapper">
 
-          <img [alt]="foundPokemon.name"
-               class="preview-image float"/>
+            <img [src]="foundPokemon.imageUrl"
+                 [alt]="foundPokemon.name"
+                 class="preview-image float"/>
 
-        </div>
+          </div>
 
 
 
@@ -90,17 +103,13 @@
 
           <div class="preview-types">
 
-            <span
+            @for (type of foundPokemon.types; track type) {
+              <span [class]="'type-badge type-' + type.toLowerCase()">
 
-              *ngFor="let type of foundPokemon.types"
+                {{ type }}
 
-              class="type-badge"
-
-              [ngClass]="'type-' + type.toLowerCase()">
-
-              {{ type }}
-
-            </span>
+              </span>
+            }
 
           </div>
 
@@ -166,15 +175,16 @@
 
           <!-- Bouton ajouter -->
 
-
-          {{ adding ? '⏳ Ajout...' : '➕ Ajouter à ma collection' }}
-
+          <button class="btn-primary" (click)="addToCollection()" [disabled]="adding">
+            {{ adding ? '⏳ Ajout...' : '➕ Ajouter à ma collection' }}
+          </button>
 
         </div>
 
       </div>
 
-    </div>
+      </div>
+    }
 
 
 

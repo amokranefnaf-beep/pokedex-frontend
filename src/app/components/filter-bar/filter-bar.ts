@@ -30,9 +30,9 @@ export interface FilterOptions {
 
   imports: [CommonModule, FormsModule],
 
-  templateUrl: './filter-bar.component.html',
+  templateUrl: './filter-bar.html',
 
-  styleUrl: './filter-bar.component.css'
+  styleUrl: './filter-bar.css'
 
 })
 

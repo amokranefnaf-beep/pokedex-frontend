@@ -1,25 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-// @ts-ignore
-import { CardService } from '../../services/card.service';
+import { CardService } from '../../service/card-service';
 
-// @ts-ignore
-import { CardComponent } from '../../components/card/card.component';
+import { CardComponent } from '../../component/card/card.component';
 
-// @ts-ignore
-import { FilterBarComponent, FilterOptions } from '../../components/filter-bar/filter-bar.component';
+import { FilterBarComponent, FilterOptions } from '../../components/filter-bar/filter-bar';
 
 import { Card } from '../../models';
 
-// @ts-ignore
-import { StatsPanelComponent } from '../../components/stats-panel/stats-panel.component';
-
-// Et ajoute dans imports:
-
-imports: // @ts-ignore
-  [CommonModule, CardComponent, FilterBarComponent, StatsPanelComponent],
+import { StatsPanelComponent } from '../../components/stats-panel/stats-panel';
 
 @Component({
 
@@ -34,8 +25,6 @@ imports: // @ts-ignore
   styleUrl: './collection.component.css'
 
 })
-
-// @ts-ignore
 export class CollectionComponent implements OnInit {
 
   // Toutes les cartes (non filtrées)
@@ -68,11 +57,7 @@ export class CollectionComponent implements OnInit {
 
   };
 
-
-
-  constructor(private cardService: CardService) {}
-
-
+  private cardService = inject(CardService);
 
   ngOnInit(): void {
 

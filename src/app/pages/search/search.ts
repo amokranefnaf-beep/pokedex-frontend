@@ -1,8 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
-
-import { FormsModule } from '@angular/forms';  // Pour ngModel
+import { FormsModule } from '@angular/forms';
 
 import { CardService } from '../../service/card-service';
 
@@ -16,7 +14,7 @@ import { PokemonApi, Card } from '../../models';
 
   standalone: true,
 
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
 
   templateUrl: './search.html',
 

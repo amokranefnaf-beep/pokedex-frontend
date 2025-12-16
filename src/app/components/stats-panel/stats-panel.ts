@@ -24,9 +24,9 @@ interface TypeCount {
 
   imports: [CommonModule],
 
-  templateUrl: './stats-panel.component.html',
+  templateUrl: './stats-panel.html',
 
-  styleUrl: './stats-panel.component.css'
+  styleUrl: './stats-panel.css'
 
 })
 
