@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-
-// @ts-ignore
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
 import { Card, PageResponse, PokemonApi } from '../models';
-import {environment} from '../../environments/environments';
+import {environment} from '../../environments/environment';
 
 
 

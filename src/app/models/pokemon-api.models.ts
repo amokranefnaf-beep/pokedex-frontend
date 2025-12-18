@@ -1,10 +1,6 @@
-// @ts-ignore
 /**
-
  * Pokémon venant directement de PokéAPI (avant ajout à la collection)
-
  */
-
 export interface PokemonApi {
   attack: number;
 

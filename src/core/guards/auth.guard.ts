@@ -1,7 +1,6 @@
 import { inject } from '@angular/core';
 import { Router, CanActivateFn } from '@angular/router';
-// @ts-ignore
-import { AuthService } from '../services/auth.service';
+import { AuthService } from './services/auth.service';
 
 /**
  * Guard pour protéger les routes authentifiées
@@ -11,7 +10,6 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
 
-  // @ts-ignore
   if (authService.isAuthenticated()) {
     return true;
   }

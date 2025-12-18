@@ -1,9 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-// @ts-ignore
 import { CollectionComponent } from './collection.component';
-// @ts-ignore
-import { CollectionService } from '../../core/services/collection.service';
+import { CollectionService } from '../../core/guards/services/collection.service';
 import { of, throwError } from 'rxjs';
 
 // @ts-ignore
