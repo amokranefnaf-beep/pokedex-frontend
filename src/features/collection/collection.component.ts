@@ -1,8 +1,8 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CollectionService } from '../../core/guards/services/collection.service';
-import { PokemonService } from '../../core/guards/services/pokemon.service';
+import { CollectionService } from '../../core/services/collection.service';
+import { PokemonService } from '../../core/services/pokemon.service';
 import { Pokemon, PokemonType, Rarity } from '../../shared/models/pokemon.model';
 import { CollectionFilters } from '../../shared/models/collection.model';
 

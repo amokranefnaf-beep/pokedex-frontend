@@ -1,9 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, tap, map } from 'rxjs';
-// @ts-ignore
-import { Pokemon, PokemonType } from '../../shared/models/pokemon.model';
-import {Evolution} from '../../../shared/models/pokemon.model';
+import { Pokemon, PokemonType, Evolution } from '../../shared/models/pokemon.model';
 
 /**
  * Service de gestion des Pokémon

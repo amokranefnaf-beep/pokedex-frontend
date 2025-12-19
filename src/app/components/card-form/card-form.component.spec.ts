@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CardFormComponent } from './card-form-component';
+import { CardFormComponent } from './card-form.component';
 
 describe('CardFormComponent', () => {
   let component: CardFormComponent;

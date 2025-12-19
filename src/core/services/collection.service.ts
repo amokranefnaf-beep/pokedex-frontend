@@ -1,9 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError } from 'rxjs';
-// @ts-ignore
-import { Collection, CollectionPokemon } from '../../shared/models/collection.model';
-import {TypeDistribution} from '../../../shared/models/collection.model';
+import { Collection, CollectionPokemon, TypeDistribution } from '../../shared/models/collection.model';
 
 /**
  * Service de gestion de la collection utilisateur

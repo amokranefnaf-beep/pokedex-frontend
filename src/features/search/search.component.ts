@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';  // Pour ngModel
 
 import { CardService } from '../../app/service/card-service';
-import {PokemonApi} from '../../app/models';
+import { PokemonApi } from '../../shared/models/pokemon-api.models';
 
 
 

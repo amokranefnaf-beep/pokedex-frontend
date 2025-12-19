@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import { Card } from '../../models';
+import { Card } from '../../../shared/models/cards.models';
 
 
 
@@ -24,9 +24,9 @@ interface TypeCount {
 
   imports: [CommonModule],
 
-  templateUrl: './stats-panel.html',
+  templateUrl: './stats-panel.component.html',
 
-  styleUrl: './stats-panel.css'
+  styleUrl: './stats-panel.component.css'
 
 })
 

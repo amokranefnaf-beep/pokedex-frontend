@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 
-import { Card, PageResponse, PokemonApi } from '../models';
+import { Card, PageResponse, PokemonApi } from '../../shared/models';
 import {environment} from '../../environments/environment';
 
 
